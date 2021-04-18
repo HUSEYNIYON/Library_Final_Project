@@ -9,7 +9,7 @@ namespace Library_Final_Project.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Review> Reviews{ get; set; }
+        public virtual ICollection<Review> Reviews{ get; set; }
 
     }
 }

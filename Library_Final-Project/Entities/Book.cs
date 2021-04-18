@@ -22,7 +22,7 @@ namespace Library_Final_Project.Entities
         public string ISBN { get; set; }
         public int DiscountId { get; set; }
         public virtual Discount Discount { get; set; }
-        public ICollection<OrderBook> OrderBooks { get; set; } //
+        public virtual ICollection<OrderBook> OrderBooks { get; set; } 
         public virtual ICollection<BookDeliveryType> BookDeliveryTypes { get; set; }
         public virtual ICollection<BookPaymentType> BookPaymentTypes { get; set; }
         public virtual ICollection<BookAuthor> BookAuthors { get; set; }
