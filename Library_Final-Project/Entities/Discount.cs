@@ -9,6 +9,6 @@ namespace Library_Final_Project.Entities
     {
         public int Id { get; set; }
         public double Price { get; set; }
-        public double Percent { get; set; }
+        public double Percent { get; set; }  
     }
 }
