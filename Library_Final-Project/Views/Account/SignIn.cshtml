@@ -1,0 +1,18 @@
+﻿@model Library_Final_Project.DTOs.SignInViewModel
+@{ 
+    ViewData["Title"] = "SignIn";
+}
+<form action="SignIn" method="post">
+    <div class="form-group">
+        <label asp-for="Login">Login</label>
+        <input type="text" class="form-control" asp-for="Login" />
+        <span class="text-danger" asp-validation-for="Login"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password">Password</label>
+        <input type="password" class="form-control" asp-for="Password">
+        <span class="text-danger" asp-validation-for="Password"></span>
+    </div>
+    <input type="hidden" asp-for="ReturnUrl">
+    <input type="submit" class="btn btn-primary" value="Войти">
+</form>

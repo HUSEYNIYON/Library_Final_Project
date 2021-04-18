@@ -1,6 +1,6 @@
 ﻿namespace Library_Final_Project.Entities
 {
-    public class OrderBook
+    public class OrderBook 
     {
         public int BookId { get; set; }
         public int Count { get; set; }
