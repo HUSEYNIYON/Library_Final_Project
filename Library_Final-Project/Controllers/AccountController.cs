@@ -1,4 +1,5 @@
 ﻿using Library_Final_Project.DTOs;
+using Library_Final_Project.DTOs.User;
 using Library_Final_Project.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -33,6 +34,40 @@ namespace Library_Final_Project.Controllers
             }
             ModelState.AddModelError("SignIn", "Логин или пароль неверный");
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> SignUp(SignUpViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var result = await _userService.SignUpAsync(model);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("SignIn");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(error.Code, error.Description);
+            }
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> SignOut()
+        {
+            await _userService.SignOutAsync();
+            return RedirectToAction("SignIn");
         }
     }
 }

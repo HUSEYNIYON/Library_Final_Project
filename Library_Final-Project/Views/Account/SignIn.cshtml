@@ -1,8 +1,8 @@
 ﻿@model Library_Final_Project.DTOs.SignInViewModel
-@{ 
+@{
     ViewData["Title"] = "SignIn";
 }
-<form action="SignIn" method="post">
+@*<form action="SignIn" method="post">
     <div class="form-group">
         <label asp-for="Login">Login</label>
         <input type="text" class="form-control" asp-for="Login" />
@@ -15,4 +15,55 @@
     </div>
     <input type="hidden" asp-for="ReturnUrl">
     <input type="submit" class="btn btn-primary" value="Войти">
-</form>
+</form>*@
+    <div class="form-container">
+        <div class="form-body">
+            <div class="header">
+                <h2>Войти</h2>
+                <p>Нет аккаунта? <a href="#">Создай!</a></p>
+            </div>
+            <form action="SignIn" method="post">
+                <div class="form-group">
+                    <div class="input-group">
+                        <i class="fa fa-user"></i>
+                        <input type="text" autocomplete="none" asp-for="Login" placeholder="Логин">
+                        <span class="text-danger" asp-validation-for="Login"></span>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa fa-lock"></i>
+                        <input type="password" autocomplete="none" asp-for="Password" placeholder="Пароль">
+                        <span class="text-danger" asp-validation-for="Password"></span>
+                    </div>
+                    <div class="input-groups flex">
+                        <div class="forgot">
+                            <a href="#">забыл пароль?</a>
+                        </div>
+                    </div>
+                    <div class="input-groups right">
+                        <input type="hidden" asp-for="ReturnUrl">
+                        <button>Войти</button>
+                    </div>
+                </div>
+                </form>
+                <div class="social-media">
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+        </div>
+        <div class="form-image">
+            <div class="text">
+                <h2>С возвращением.</h2>
+                <p>Стоп! Стоп! Стоп! Дай я тебя сфотографирую, иначе никто не поверит, что я тебя видел(а)!</p>
+            </div>
+        </div>
+    </div>

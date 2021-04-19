@@ -34,6 +34,7 @@ namespace Library_Final_Project
                 option.Password.RequireLowercase = false;
                 option.Password.RequireUppercase = false;
                 option.Password.RequireNonAlphanumeric = false;
+                option.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<LibraryDbContext>().AddDefaultTokenProviders();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();

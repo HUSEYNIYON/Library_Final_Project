@@ -1,0 +1,26 @@
+﻿@model Library_Final_Project.DTOs.User.SignUpViewModel
+
+@{
+    ViewBag.Title = "SignUp";
+    Layout = "_Layout";
+}
+<div asp-validation-summary="All"></div>
+<form action="SignUp" method="post">
+    <div class="form-group">
+        <label asp-for="Login">Login</label>
+        <input type="text" class="form-control" asp-for="Login">
+        <span class="text-danger" asp-validation-for="Login"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email">Email</label>
+        <input type="email" class="form-control" asp-for="Email">
+        <span class="text-danger" asp-validation-for="Email"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password">Password</label>
+        <input type="password" class="form-control" asp-for="Password">
+        <span class="text-danger" asp-validation-for="Password"></span>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Зарегистрироваться">
+</form>
+
