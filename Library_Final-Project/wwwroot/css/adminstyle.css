@@ -1,0 +1,388 @@
+﻿
+/*Sign In styles*/
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    font-family: 'Poppins', sans-serif;
+}
+
+.container .form-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 1250px;
+    height: 700px;
+    background: #fff;
+}
+
+.container .form-image {
+    position: absolute;
+    right: 0;
+    color: #fff;
+    height: 100%;
+    width: 65%;
+    background: linear-gradient(rgba(235,0,255, 0.5), rgba(17,166,223,0.8)), url('../img/123.jpg');
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 70% 100%)
+}
+
+
+.social-media {
+    display: flex;
+    justify-content: center;
+}
+
+.social-icon {
+    height: 46px;
+    width: 46px;
+    border: 1px solid #333;
+    margin: 0 0.45rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 1.1rem;
+    border-radius: 50%;
+}
+
+.social-icon:hover {
+    color: #de00a7;
+    border-color: #de00a7;
+}
+
+.container .form-image .text {
+    position: absolute;
+    right: 0;
+    padding: 50px;
+    width: 65%;
+}
+
+.container .form-image .text p {
+    font-size: 22px;
+}
+
+.container .form-image .text h2 {
+    font-size: 54px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group {
+    margin: 30px 60px;
+}
+
+.form-group .input-group {
+    width: 350px;
+    margin: 20px 0;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    display: grid;
+    grid-template-columns: 15% 85%;
+}
+
+.form-group.input-group::placeholder {
+    color: rgb(237, 0, 0);
+    font-weight: 500;
+}
+
+.form-group .input-group i {
+    text-align: center;
+    line-height: 55px;
+    color: #505050;
+    font-size: 1.1rem;
+}
+
+.form-group .input-group input[type = "text"],
+    .form-group .input-group input[type = "password"] {
+        width: 100%;
+        padding: 12px 15px;
+        outline: none;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        background: none;
+        border: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: rgb(89, 88, 88);
+}
+
+.form-body .header {
+    margin: 0 60px;
+    color: rgb(82, 82, 82);
+}
+
+.form-body {
+    margin-left: 5%;
+}
+
+.form-body .header h2 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.form-body .header p {
+    font-size: 17px;
+}
+
+.form-body .header a {
+    text-decoration: none;
+    color: rgb(235,0,255);
+}
+.form-group .input-groups.flex {
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-group .input-groups.flex a {
+    text-decoration: underline;
+    color: rgba(0, 0, 0, 0.8)
+}
+
+.form-group .input-groups.flex a:hover {
+        color: rgb(235, 0, 255);
+}
+
+.form-group .input-groups button {
+    position: relative;
+    background: rgb(235, 0, 255);
+    width: 130px;
+    height: 37px;
+    padding: 7px 15px;
+    border: none;
+    color: #fff;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    z-index: 1;
+    overflow: hidden;
+    font-size: 17px;
+}
+
+.form-group .input-groups.right {
+    text-align: right;
+}
+
+.form-group .input-groups button::before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    border-radius: 5px;
+    background: linear-gradient(to left, rgba(235,0,255), rgb(2, 147, 204));
+    left: -100px;
+    top: 0;
+    transition: transform 0.5s;
+}
+
+.form-group .input-groups button:hover::before {
+    transform: translateX(100px);
+    z-index: -1;
+}
+
+
+/*registration*/
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.containerr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f2f2f2;
+    font-family: 'Poppins', sans-serif;
+}
+
+    .containerr .form-containerr {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+    }
+
+    .containerr .form-imager {
+        position: absolute;
+        right: 0;
+        color: #fff;
+        height: 100%;
+        width: 70%;
+        background: linear-gradient(rgba(0, 248, 41, 0.5), rgba(255, 0, 191,0.7)), url('../img/book.jpg');
+        background-size: 100%;
+        clip-path: polygon(0 0, 100% 0, 73% 100%, 0% 100%);
+    }
+
+.form-imager {
+    margin-right: 45%;
+    background-repeat: no-repeat;
+}
+
+.social-mediar {
+    display: flex;
+    justify-content: center;
+    margin-right: 70px;
+}
+
+.social-iconr {
+    height: 46px;
+    width: 46px;
+    border: 1px solid #333;
+    margin: 0 0.45rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 1.1rem;
+    border-radius: 50%;
+}
+
+    .social-iconr:hover {
+        color: #0004de;
+        border-color: #0004de;
+    }
+
+.containerr .form-imager .textr {
+    position: absolute;
+    padding: 50px;
+    margin-left: 230px;
+    width: 65%;
+}
+
+    .containerr .form-imager .textr p {
+        font-size: 22px;
+    }
+
+    .containerr .form-imager .textr h2 {
+        font-size: 54px;
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+.form-groupr {
+    margin: 30px 60px;
+}
+
+    .form-groupr .input-groupr {
+        width: 350px;
+        margin: 20px 0;
+        border-radius: 5px;
+        background-color: #f0f0f0;
+        display: grid;
+        grid-template-columns: 15% 85%;
+    }
+
+        .form-groupr.input-groupr::placeholder {
+            color: rgb(237, 0, 0);
+            font-weight: 500;
+        }
+
+        .form-groupr .input-groupr i {
+            text-align: center;
+            line-height: 55px;
+            color: #505050;
+            font-size: 1.1rem;
+        }
+
+        .form-groupr .input-groupr input[type = "text"],
+        .form-groupr .input-groupr input[type = "password"] {
+            width: 100%;
+            padding: 12px 15px;
+            outline: none;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            background: none;
+            border: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: rgb(89, 88, 88);
+        }
+
+.form-bodyr .headerr {
+    margin: 0 60px;
+    color: rgb(82, 82, 82);
+}
+
+.form-bodyr {
+    margin-left: 58%;
+}
+
+    .form-bodyr .headerr h2 {
+        font-size: 40px;
+        margin-bottom: 15px;
+    }
+
+    .form-bodyr .headerr p {
+        font-size: 17px;
+    }
+
+    .form-bodyr .headerr a {
+        text-decoration: none;
+        color: #0004de;
+    }
+
+.form-groupr .input-groupsr.flex {
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+    .form-groupr .input-groupsr.flex a {
+        text-decoration: underline;
+        color: rgba(0, 0, 0, 0.8)
+    }
+
+        .form-groupr .input-groupsr.flex a:hover {
+            color: #0004de;
+        }
+
+.form-groupr .input-groupsr button {
+    position: relative;
+    background: #0004de;
+    width: 200px;
+    height: 37px;
+    padding: 7px 15px;
+    border: none;
+    color: #fff;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    z-index: 1;
+    overflow: hidden;
+    font-size: 17px;
+}
+
+.form-groupr .input-groupsr.rightr {
+    text-align: right;
+    margin-right: 30px;
+}
+
+.form-groupr .input-groupsr button::before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    border-radius: 5px;
+    background: linear-gradient(to left, rgb(0, 255, 55), rgb(255, 0, 212));
+    left: -100px;
+    top: 0;
+    transition: transform 0.5s;
+}
+
+.form-groupr .input-groupsr button:hover::before {
+    transform: translateX(100px);
+    z-index: -1;
+}

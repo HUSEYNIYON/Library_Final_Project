@@ -2,25 +2,89 @@
 
 @{
     ViewBag.Title = "SignUp";
-    Layout = "_Layout";
+    Layout = "_AdminLayout";
 }
-<div asp-validation-summary="All"></div>
+@*<div asp-validation-summary="All"></div>
 <form action="SignUp" method="post">
     <div class="form-group">
         <label asp-for="Login">Login</label>
-        <input type="text" class="form-control" asp-for="Login">
+        <input type="text" autocomplete="none" class="form-control" asp-for="Login">
         <span class="text-danger" asp-validation-for="Login"></span>
     </div>
     <div class="form-group">
         <label asp-for="Email">Email</label>
-        <input type="email" class="form-control" asp-for="Email">
+        <input type="email" autocomplete="none" class="form-control" asp-for="Email">
         <span class="text-danger" asp-validation-for="Email"></span>
     </div>
     <div class="form-group">
         <label asp-for="Password">Password</label>
-        <input type="password" class="form-control" asp-for="Password">
+        <input type="password" autocomplete="none" class="form-control" asp-for="Password">
         <span class="text-danger" asp-validation-for="Password"></span>
     </div>
     <input type="submit" class="btn btn-primary" value="Зарегистрироваться">
-</form>
+</form>*@
 
+
+<div class="containerr">
+    <div class="form-containerr">
+        <div class="form-bodyr">
+                <a asp-controller="Home" asp-action="index">
+                    <img src="~/img/close.png" width="25" style="margin-left:520px;position:absolute; margin-top: -70px;" alt="Alternate Text" />
+                </a>
+            <div class="headerr">
+                <h2>Зарегистрироваться</h2>
+                <p>Есть аккаунт? <a asp-controller="Account" asp-action="SignIn">Войти!</a></p>
+            </div>
+            <div class="form-groupr">
+                <form action="SignUp" method="post">
+                    <div class="input-groupr">
+                        <i class="fa fa-user"></i>
+                        <input type="text" autocomplete="none" asp-for="Login" placeholder="Логин">
+                        <span class="text-danger" asp-validation-for="Login"></span>
+                    </div>
+                    <div class="input-groupr">
+                        <i class="fa fa-envelope"></i>
+                        <input type="text" autocomplete="none" asp-for="Email" placeholder="кто-то@examle.com">
+                        <span class="text-danger" asp-validation-for="Email"></span>
+                    </div>
+                    <div class="input-groupr">
+                        <i class="fa fa-lock"></i>
+                        <input type="password" asp-for="Password" placeholder="Придумайте пароль">
+                        <span class="text-danger" asp-validation-for="Password"></span>
+                    </div>
+                    <div class="input-groupsr flex">
+                        <div class="forgotr">
+                            <a href="#">забыл пароль?</a>
+                        </div>
+                    </div>
+                    <div class="input-groupsr rightr">
+                        <button>Зарегистрироваться</button>
+                    </div>
+                </form>
+            </div>
+            <div class="social-mediar">
+                <a href="#" class="social-iconr">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-iconr">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="social-iconr">
+                    <i class="fab fa-google"></i>
+                </a>
+                <a href="#" class="social-iconr">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+        <div class="form-imager">
+            <div class="textr">
+                <h2>Добро пожаловать.</h2>
+                <p>
+                    Родился — регистрация, женился — регистрация, умер — опять регистрация.
+                    Не для того родится человек на свет Божий, чтобы зарегистрироваться.!
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
