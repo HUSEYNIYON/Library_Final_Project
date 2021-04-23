@@ -1,5 +1,6 @@
 ﻿using Library_Final_Project.Context;
 using Library_Final_Project.DTOs;
+using Library_Final_Project.DTOs.Author;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,15 @@ namespace Library_Final_Project.Services.Author
                 Name = x.Name
             }).ToListAsync();
             return authors;
+        }
+        public async Task CreateAsync(CreateAuthorViewModel model)
+        {
+            var author = new Entities.Author
+            {
+                Name = model.Name
+            };
+            await _context.Authors.AddAsync(author);
+            await _context.SaveChangesAsync();
         }
     }
 }

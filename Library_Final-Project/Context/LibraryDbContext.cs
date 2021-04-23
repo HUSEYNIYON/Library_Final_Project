@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Library_Final_Project.DTOs;
+using Library_Final_Project.DTOs.Category;
 
 namespace Library_Final_Project.Context
 {
@@ -76,5 +78,9 @@ namespace Library_Final_Project.Context
                 }
             );
         }
+
+        public DbSet<Library_Final_Project.DTOs.AuthorViewModel> AuthorViewModel { get; set; }
+
+        public DbSet<Library_Final_Project.DTOs.Category.CategoryViewModel> CategoryViewModel { get; set; }
     }
 }

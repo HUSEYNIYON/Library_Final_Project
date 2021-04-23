@@ -38,7 +38,38 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy"><b>О нас</b></a>
                         </li>
                     </ul>
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="SignIn"><img src="~/img/person-circle.svg" width="30" alt="person_circle"/></a>
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="SignIn"><img src="~/img/person-circle.svg" width="30" alt="person_circle" /></a>
+
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @*<div class="dropdown">
+                <a asp-controller="" asp-action="" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownUser1">
+                    <li><a class="dropdown-item" href="#"></a></li>
+                    <li><a class="dropdown-item" href="#"></a></li>
+                    <li><a class="dropdown-item" href="#"></a></li>
+                </ul>
+            </div>*@
+                <div class="btn-group">
+                    <a asp-controller="" asp-action=""  id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                    </a>
+                    <button type="button" class="btn  text-decoration-none dropdown-toggle dropdown-toggle-split "  data-toggle="dropdown" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a class="dropdown-item" href="#">Информация</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" asp-controller="Account" asp-action="SignOut">Выход</a></li>
+                    </ul>
+                </div>
+                    }
                 </div>
             </div>
         </nav>

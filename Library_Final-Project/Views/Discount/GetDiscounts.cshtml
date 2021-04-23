@@ -1,0 +1,21 @@
+﻿<div class="card">
+    <div class="card-body">
+        <table class="table table-hover table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Price</th>
+                    <th>Percent</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var discount in Model)
+                {
+                    <tr>
+                        <td>@discount.Price</td>
+                        <td>@discount.Percent</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

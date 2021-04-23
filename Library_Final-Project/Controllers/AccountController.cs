@@ -67,7 +67,7 @@ namespace Library_Final_Project.Controllers
         public async Task<IActionResult> SignOut()
         {
             await _userService.SignOutAsync();
-            return RedirectToAction("SignIn");
+            return RedirectToAction("Index","Home");
         }
     }
 }

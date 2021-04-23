@@ -3,81 +3,77 @@
     ViewData["Title"] = "SignIn";
 }
 @{
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = null;
 }
-
-<div class="container">
-    <div class="form-container">
-                <div class="exit">
-                    <a asp-controller="Home" asp-action="index">
-                        <img src="~/img/close.png" width="25" style="margin-left: -90px;margin-right:100%;position:absolute; margin-top: -320px;" alt="Alternate Text" />
-                    </a>
-                </div>
-        <div class="form-body">
-            <div class="header">
-                <h2>Войти</h2>
-                <p>Нет аккаунта? <a asp-controller="Account" asp-action="SignUp">Создай!</a></p>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/adminstyle.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="exit">
+                <a asp-controller="Home" asp-action="index">
+                    <img src="~/img/close.png" width="25" style="margin-left: -90px;margin-right:100%;position:absolute; margin-top: -320px;" alt="Alternate Text" />
+                </a>
             </div>
-            <form action="SignIn" method="post">
-                <div class="form-group">
-                    <div class="input-group">
-                        <i class="fa fa-user"></i>
-                        <input type="text" autocomplete="none" asp-for="Login" placeholder="Логин">
-                        <span class="text-danger" asp-validation-for="Login"></span>
-                    </div>
-                    <div class="input-group">
-                        <i class="fa fa-lock"></i>
-                        <input type="password" autocomplete="none" asp-for="Password" placeholder="Пароль">
-                        <span class="text-danger" asp-validation-for="Password"></span>
-                    </div>
-                    <div class="input-groups flex">
-                        <div class="forgot">
-                            <a href="#">забыл пароль?</a>
+            <div class="form-body">
+                <div class="header">
+                    <h2>Войти</h2>
+                    <p>Нет аккаунта? <a asp-controller="Account" asp-action="SignUp">Создай!</a></p>
+                </div>
+                <form action="SignIn" method="post">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <i class="fa fa-user"></i>
+                            <input type="text" autocomplete="none" asp-for="Login" placeholder="Логин">
+                            <span class="text-danger" asp-validation-for="Login"></span>
+                        </div>
+                        <div class="input-group">
+                            <i class="fa fa-lock"></i>
+                            <input type="password" autocomplete="none" asp-for="Password" placeholder="Пароль">
+                            <span class="text-danger" asp-validation-for="Password"></span>
+                        </div>
+                        <div class="input-groups flex">
+                            <div class="forgot">
+                                <a href="#">забыл пароль?</a>
+                                <div asp-validation-summary="All"></div>
+                            </div>
+                        </div>
+                        <div class="input-groups right">
+                            <input type="hidden" asp-for="ReturnUrl">
+                            <button>Войти</button>
                         </div>
                     </div>
-                    <div class="input-groups right">
-                        <input type="hidden" asp-for="ReturnUrl">
-                        <button>Войти</button>
-                    </div>
+                </form>
+                <div class="social-media">
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
                 </div>
-            </form>
-            <div class="social-media">
-                <a href="#" class="social-icon">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" class="social-icon">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="#" class="social-icon">
-                    <i class="fab fa-google"></i>
-                </a>
-                <a href="#" class="social-icon">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
             </div>
-        </div>
-        <div class="form-image">
-            <div class="text">
-                <h2>С возвращением.</h2>
-                <p>Стоп! Стоп! Стоп! Дай я тебя сфотографирую, иначе никто не поверит, что я тебя видел(а)!</p>
+            <div class="form-image">
+                <div class="text">
+                    <h2>С возвращением.</h2>
+                    <p>Стоп! Стоп! Стоп! Дай я тебя сфотографирую, иначе никто не поверит, что я тебя видел(а)!</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-
-
-@*<form action="SignIn" method="post">
-        <div class="form-group">
-            <label asp-for="Login">Login</label>
-            <input type="text" class="form-control" asp-for="Login" />
-            <span class="text-danger" asp-validation-for="Login"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Password">Password</label>
-            <input type="password" class="form-control" asp-for="Password">
-            <span class="text-danger" asp-validation-for="Password"></span>
-        </div>
-        <input type="hidden" asp-for="ReturnUrl">
-        <input type="submit" class="btn btn-primary" value="Войти">
-    </form>*@
+</body>
+</html>

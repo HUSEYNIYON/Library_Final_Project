@@ -9,12 +9,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(var author in Model)
+                @foreach (var author in Model)
                 {
-                    <tr>@author.Id</tr>
-                    <tr>@author.Name</tr>
-                }
-            </tbody>
-        </table>
+            <tr>
+                <td>@author.Id</td>
+                <td>@author.Name</td>
+                </tr>
+            }
+                </tbody>
+            </table>
     </div>
 </div>
