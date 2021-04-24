@@ -14,6 +14,6 @@ namespace Library_Final_Project.Entities
         public int OrderStateId { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual OrderState OrderState { get; set; }
-        public virtual ICollection<OrderBook> OrderBooks { get; set; }
+        public virtual ICollection<OrderBook> OrderBooks { get; set; } 
     }
 }

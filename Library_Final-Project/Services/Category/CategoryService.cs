@@ -1,5 +1,4 @@
-﻿using Library_Final_Project.Context;
-using Library_Final_Project.DTOs.Category;
+﻿using Library_Final_Project.DTOs.Category;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
