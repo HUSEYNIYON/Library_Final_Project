@@ -40,9 +40,7 @@
                     </ul>
                     @if (!User.Identity.IsAuthenticated)
                     {
-
                         <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="SignIn"><img src="~/img/person-circle.svg" width="30" alt="person_circle" /></a>
-
                     }
                     @if (User.Identity.IsAuthenticated)
                     {
@@ -70,9 +68,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-center bg-light text-muted">
         <div class="container-fluid">
-            &copy; 2021 - Library_Final_Project - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - Онлайн интернет магазин - <a asp-area="" asp-controller="Home" asp-action="Privacy">Права</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

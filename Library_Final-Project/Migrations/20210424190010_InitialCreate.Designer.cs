@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library_Final_Project.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20210424084416_init")]
-    partial class init
+    [Migration("20210424190010_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -140,6 +140,9 @@ namespace Library_Final_Project.Migrations
                     b.Property<int>("AvailableCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -175,6 +178,8 @@ namespace Library_Final_Project.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Books");
 
                     b.HasData(
@@ -183,6 +188,7 @@ namespace Library_Final_Project.Migrations
                             Id = 1,
                             Available = true,
                             AvailableCount = 100,
+                            CategoryId = 1,
                             Description = "«„Я похож на сумасшедшего?“ — спросил меня Илон Маск». О чем книга В книге «Илон Маск: Tesla, SpaceX и дорога в будущее» автор представляет независимый и разносторонний взгляд на жизнь и достижения самого яркого предпринимателя Кремниевой долины.",
                             HasPdf = false,
                             ISBN = "148419606",
@@ -199,6 +205,7 @@ namespace Library_Final_Project.Migrations
                             Id = 2,
                             Available = true,
                             AvailableCount = 100,
+                            CategoryId = 2,
                             Description = "Книга, которая изменит вашу жизнь! Самое известное исследование о подсознании от известного писателя и тренера личностного роста Джона Кехо! В подсознании каждого человека скрываются огромные резервы. И когда логика оказывается бессильной, именно подсознание поможет вам решать самые сложные повседневные проблемы.",
                             HasPdf = false,
                             ISBN = "17574992",
@@ -215,6 +222,7 @@ namespace Library_Final_Project.Migrations
                             Id = 3,
                             Available = true,
                             AvailableCount = 50,
+                            CategoryId = 3,
                             Description = "Автор этой книги уверен: чтобы исполнить все свои замыслы и желания, Вы прежде всего должны добиться успеха в денежных вопросах, используя принципы управления личными финансами, изложенные на ее страницах.",
                             HasPdf = false,
                             ISBN = "29968802",
@@ -231,6 +239,7 @@ namespace Library_Final_Project.Migrations
                             Id = 4,
                             Available = true,
                             AvailableCount = 606,
+                            CategoryId = 1,
                             Description = "В основу книги Уолтера Айзексона Стив Джобс легли беседы с самим Стивом Джобсом, а также с его родственниками, друзьями, врагами, соперниками и коллегами. Джобс никак не контролировал автора. Он откровенно отвечал на все вопросы и ждал такой же честности от остальных.",
                             HasPdf = false,
                             ISBN = "240540450",
@@ -247,6 +256,7 @@ namespace Library_Final_Project.Migrations
                             Id = 5,
                             Available = true,
                             AvailableCount = 60,
+                            CategoryId = 2,
                             Description = "Если даже такая нищебродская тушка, как я сумела поправить свое финансовое положение, сможет кто угодно! - заявляет Джен Синсеро. И ей сложно не верить. До сорока с лишнем лет она жила в переделанном гараже, одевалась в секонд-хэнде и не могла себе позволить вылечить зубы.",
                             HasPdf = false,
                             ISBN = "k9052",
@@ -263,6 +273,7 @@ namespace Library_Final_Project.Migrations
                             Id = 6,
                             Available = true,
                             AvailableCount = 30,
+                            CategoryId = 4,
                             Description = "Эта книга - ваш личный тренер. Каждый день она будет поднимать боевой дух и заряжать на успех. Ее автор, знаменитая Джен Синсеро, призывает не сбавлять обороты на пути к успеху и ежедневно накачивать мышцы крутости в Духовном тренажерном зале. Успех - это способ существования, постоянной адаптации и роста.",
                             HasPdf = false,
                             ISBN = "k5043",
@@ -886,6 +897,17 @@ namespace Library_Final_Project.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Library_Final_Project.Entities.Book", b =>
+                {
+                    b.HasOne("Library_Final_Project.Entities.Category", "Category")
+                        .WithMany("Books")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Library_Final_Project.Entities.BookAuthor", b =>
                 {
                     b.HasOne("Library_Final_Project.Entities.Author", "Author")
@@ -1168,6 +1190,8 @@ namespace Library_Final_Project.Migrations
 
             modelBuilder.Entity("Library_Final_Project.Entities.Category", b =>
                 {
+                    b.Navigation("Books");
+
                     b.Navigation("Categories");
                 });
 

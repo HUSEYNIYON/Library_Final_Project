@@ -18,6 +18,8 @@ namespace Library_Final_Project.Entities
         public string ISBN { get; set; }
         public double Price { get; set; }
         public double Percent { get; set; }
+        public int CategoryId { get; set; }
+        public virtual Category Category { get; set; }
         public virtual ICollection<OrderBook> OrderBooks { get; set; } 
         public virtual ICollection<BookDeliveryType> BookDeliveryTypes { get; set; }
         public virtual ICollection<BookPaymentType> BookPaymentTypes { get; set; }

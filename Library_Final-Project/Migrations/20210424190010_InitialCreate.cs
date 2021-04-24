@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Library_Final_Project.Migrations
 {
-    public partial class init : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,31 +57,6 @@ namespace Library_Final_Project.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Authors", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Books",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Available = table.Column<bool>(type: "bit", nullable: false),
-                    AvailableCount = table.Column<int>(type: "int", nullable: false),
-                    PublishYear = table.Column<int>(type: "int", nullable: false),
-                    Language = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PagesNumber = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HasPdf = table.Column<bool>(type: "bit", nullable: false),
-                    PdfPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ISBN = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    Percent = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Books", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -291,97 +266,33 @@ namespace Library_Final_Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BookAuthors",
+                name: "Books",
                 columns: table => new
                 {
-                    BookId = table.Column<int>(type: "int", nullable: false),
-                    AuthorId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Available = table.Column<bool>(type: "bit", nullable: false),
+                    AvailableCount = table.Column<int>(type: "int", nullable: false),
+                    PublishYear = table.Column<int>(type: "int", nullable: false),
+                    Language = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PagesNumber = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HasPdf = table.Column<bool>(type: "bit", nullable: false),
+                    PdfPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ISBN = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    Percent = table.Column<double>(type: "float", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookAuthors", x => new { x.BookId, x.AuthorId });
+                    table.PrimaryKey("PK_Books", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BookAuthors_Authors_AuthorId",
-                        column: x => x.AuthorId,
-                        principalTable: "Authors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BookAuthors_Books_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Books",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FavoriteBooks",
-                columns: table => new
-                {
-                    BookId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FavoriteBooks", x => new { x.BookId, x.UserId });
-                    table.ForeignKey(
-                        name: "FK_FavoriteBooks_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FavoriteBooks_Books_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Books",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserBooks",
-                columns: table => new
-                {
-                    BookId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserBooks", x => new { x.BookId, x.UserId });
-                    table.ForeignKey(
-                        name: "FK_UserBooks_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserBooks_Books_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Books",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BookDeliveryTypes",
-                columns: table => new
-                {
-                    BookId = table.Column<int>(type: "int", nullable: false),
-                    DeliveryTypeId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BookDeliveryTypes", x => new { x.BookId, x.DeliveryTypeId });
-                    table.ForeignKey(
-                        name: "FK_BookDeliveryTypes_Books_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Books",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BookDeliveryTypes_DeliveryTypes_DeliveryTypeId",
-                        column: x => x.DeliveryTypeId,
-                        principalTable: "DeliveryTypes",
+                        name: "FK_Books_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -417,6 +328,54 @@ namespace Library_Final_Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BookAuthors",
+                columns: table => new
+                {
+                    BookId = table.Column<int>(type: "int", nullable: false),
+                    AuthorId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookAuthors", x => new { x.BookId, x.AuthorId });
+                    table.ForeignKey(
+                        name: "FK_BookAuthors_Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Authors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookAuthors_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BookDeliveryTypes",
+                columns: table => new
+                {
+                    BookId = table.Column<int>(type: "int", nullable: false),
+                    DeliveryTypeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookDeliveryTypes", x => new { x.BookId, x.DeliveryTypeId });
+                    table.ForeignKey(
+                        name: "FK_BookDeliveryTypes_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookDeliveryTypes_DeliveryTypes_DeliveryTypeId",
+                        column: x => x.DeliveryTypeId,
+                        principalTable: "DeliveryTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BookPaymentTypes",
                 columns: table => new
                 {
@@ -436,6 +395,55 @@ namespace Library_Final_Project.Migrations
                         name: "FK_BookPaymentTypes_PaymentTypes_PaymentTypeId",
                         column: x => x.PaymentTypeId,
                         principalTable: "PaymentTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CartBooks",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    BookId = table.Column<int>(type: "int", nullable: false),
+                    CartId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartBooks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CartBooks_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CartBooks_Carts_CartId",
+                        column: x => x.CartId,
+                        principalTable: "Carts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FavoriteBooks",
+                columns: table => new
+                {
+                    BookId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FavoriteBooks", x => new { x.BookId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_FavoriteBooks_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FavoriteBooks_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -477,26 +485,25 @@ namespace Library_Final_Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CartBooks",
+                name: "UserBooks",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
                     BookId = table.Column<int>(type: "int", nullable: false),
-                    CartId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CartBooks", x => x.Id);
+                    table.PrimaryKey("PK_UserBooks", x => new { x.BookId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_CartBooks_Books_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Books",
+                        name: "FK_UserBooks_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CartBooks_Carts_CartId",
-                        column: x => x.CartId,
-                        principalTable: "Carts",
+                        name: "FK_UserBooks_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -539,19 +546,6 @@ namespace Library_Final_Project.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Books",
-                columns: new[] { "Id", "Available", "AvailableCount", "Description", "HasPdf", "ISBN", "ImagePath", "Language", "PagesNumber", "PdfPath", "Percent", "Price", "PublishYear", "Title" },
-                values: new object[,]
-                {
-                    { 5, true, 60, "Если даже такая нищебродская тушка, как я сумела поправить свое финансовое положение, сможет кто угодно! - заявляет Джен Синсеро. И ей сложно не верить. До сорока с лишнем лет она жила в переделанном гараже, одевалась в секонд-хэнде и не могла себе позволить вылечить зубы.", false, "k9052", "/img/nenoy.jpg", "Русский", 304, null, 0.0, 99.0, 2019, "НЕ НОЙ." },
-                    { 4, true, 606, "В основу книги Уолтера Айзексона Стив Джобс легли беседы с самим Стивом Джобсом, а также с его родственниками, друзьями, врагами, соперниками и коллегами. Джобс никак не контролировал автора. Он откровенно отвечал на все вопросы и ждал такой же честности от остальных.", false, "240540450", "/img/stivjobs.jpg", "Русский", 100, null, 0.0, 146.0, 2017, "Айзексон Уолтер: Стив Джобс. Биография" },
-                    { 6, true, 30, "Эта книга - ваш личный тренер. Каждый день она будет поднимать боевой дух и заряжать на успех. Ее автор, знаменитая Джен Синсеро, призывает не сбавлять обороты на пути к успеху и ежедневно накачивать мышцы крутости в Духовном тренажерном зале. Успех - это способ существования, постоянной адаптации и роста.", false, "k5043", "/img/netupi.jpg", "Русский", 306, null, 0.0, 99.0, 2019, "Не тупи" },
-                    { 2, true, 100, "Книга, которая изменит вашу жизнь! Самое известное исследование о подсознании от известного писателя и тренера личностного роста Джона Кехо! В подсознании каждого человека скрываются огромные резервы. И когда логика оказывается бессильной, именно подсознание поможет вам решать самые сложные повседневные проблемы.", false, "17574992", "/img/podsoznanie.jpg", "Русский", 174, null, 0.0, 68.0, 2019, "Джон Кехо: Подсознание может все" },
-                    { 1, true, 100, "«„Я похож на сумасшедшего?“ — спросил меня Илон Маск». О чем книга В книге «Илон Маск: Tesla, SpaceX и дорога в будущее» автор представляет независимый и разносторонний взгляд на жизнь и достижения самого яркого предпринимателя Кремниевой долины.", false, "148419606", "/img/ilon.jpg", "Русский", 390, null, 0.0, 124.0, 2019, "Вэнс Эшли: Илон Маск. Tesla, SpaceX и дорога в будущее" },
-                    { 3, true, 50, "Автор этой книги уверен: чтобы исполнить все свои замыслы и желания, Вы прежде всего должны добиться успеха в денежных вопросах, используя принципы управления личными финансами, изложенные на ее страницах.", false, "29968802", "/img/samiybogatiy.png", "Русский", 190, null, 0.0, 64.0, 2020, "Джорж Клейсон: Самый богатый человек в Вавилоне" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CategoryId", "IconPath", "Name", "ParentCategoryId" },
                 values: new object[] { 1, null, null, "Каталог", null });
@@ -582,10 +576,28 @@ namespace Library_Final_Project.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 3, "Reject" },
                     { 1, "New" },
                     { 2, "Approved" },
+                    { 3, "Reject" },
                     { 4, "Modified" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Books",
+                columns: new[] { "Id", "Available", "AvailableCount", "CategoryId", "Description", "HasPdf", "ISBN", "ImagePath", "Language", "PagesNumber", "PdfPath", "Percent", "Price", "PublishYear", "Title" },
+                values: new object[,]
+                {
+                    { 1, true, 100, 1, "«„Я похож на сумасшедшего?“ — спросил меня Илон Маск». О чем книга В книге «Илон Маск: Tesla, SpaceX и дорога в будущее» автор представляет независимый и разносторонний взгляд на жизнь и достижения самого яркого предпринимателя Кремниевой долины.", false, "148419606", "/img/ilon.jpg", "Русский", 390, null, 0.0, 124.0, 2019, "Вэнс Эшли: Илон Маск. Tesla, SpaceX и дорога в будущее" },
+                    { 4, true, 606, 1, "В основу книги Уолтера Айзексона Стив Джобс легли беседы с самим Стивом Джобсом, а также с его родственниками, друзьями, врагами, соперниками и коллегами. Джобс никак не контролировал автора. Он откровенно отвечал на все вопросы и ждал такой же честности от остальных.", false, "240540450", "/img/stivjobs.jpg", "Русский", 100, null, 0.0, 146.0, 2017, "Айзексон Уолтер: Стив Джобс. Биография" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "CategoryId", "IconPath", "Name", "ParentCategoryId" },
+                values: new object[,]
+                {
+                    { 2, null, null, "Комиксы", 1 },
+                    { 3, null, null, "Художественная литература", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -594,11 +606,7 @@ namespace Library_Final_Project.Migrations
                 values: new object[,]
                 {
                     { 1, 1 },
-                    { 2, 2 },
-                    { 3, 3 },
-                    { 4, 4 },
-                    { 5, 5 },
-                    { 1, 6 }
+                    { 4, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -606,12 +614,8 @@ namespace Library_Final_Project.Migrations
                 columns: new[] { "BookId", "DeliveryTypeId" },
                 values: new object[,]
                 {
-                    { 6, 1 },
-                    { 5, 1 },
-                    { 4, 1 },
-                    { 3, 1 },
-                    { 2, 1 },
-                    { 1, 1 }
+                    { 1, 1 },
+                    { 4, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -620,11 +624,17 @@ namespace Library_Final_Project.Migrations
                 values: new object[,]
                 {
                     { 1, 1 },
-                    { 2, 1 },
-                    { 3, 1 },
-                    { 4, 1 },
-                    { 5, 1 },
-                    { 6, 1 }
+                    { 4, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Books",
+                columns: new[] { "Id", "Available", "AvailableCount", "CategoryId", "Description", "HasPdf", "ISBN", "ImagePath", "Language", "PagesNumber", "PdfPath", "Percent", "Price", "PublishYear", "Title" },
+                values: new object[,]
+                {
+                    { 2, true, 100, 2, "Книга, которая изменит вашу жизнь! Самое известное исследование о подсознании от известного писателя и тренера личностного роста Джона Кехо! В подсознании каждого человека скрываются огромные резервы. И когда логика оказывается бессильной, именно подсознание поможет вам решать самые сложные повседневные проблемы.", false, "17574992", "/img/podsoznanie.jpg", "Русский", 174, null, 0.0, 68.0, 2019, "Джон Кехо: Подсознание может все" },
+                    { 5, true, 60, 2, "Если даже такая нищебродская тушка, как я сумела поправить свое финансовое положение, сможет кто угодно! - заявляет Джен Синсеро. И ей сложно не верить. До сорока с лишнем лет она жила в переделанном гараже, одевалась в секонд-хэнде и не могла себе позволить вылечить зубы.", false, "k9052", "/img/nenoy.jpg", "Русский", 304, null, 0.0, 99.0, 2019, "НЕ НОЙ." },
+                    { 3, true, 50, 3, "Автор этой книги уверен: чтобы исполнить все свои замыслы и желания, Вы прежде всего должны добиться успеха в денежных вопросах, используя принципы управления личными финансами, изложенные на ее страницах.", false, "29968802", "/img/samiybogatiy.png", "Русский", 190, null, 0.0, 64.0, 2020, "Джорж Клейсон: Самый богатый человек в Вавилоне" }
                 });
 
             migrationBuilder.InsertData(
@@ -632,19 +642,59 @@ namespace Library_Final_Project.Migrations
                 columns: new[] { "Id", "CategoryId", "IconPath", "Name", "ParentCategoryId" },
                 values: new object[,]
                 {
-                    { 3, null, null, "Художественная литература", 1 },
-                    { 2, null, null, "Комиксы", 1 }
+                    { 4, null, null, "Поэзия", 3 },
+                    { 5, null, null, "Романы", 3 }
                 });
 
             migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "CategoryId", "IconPath", "Name", "ParentCategoryId" },
-                values: new object[] { 4, null, null, "Поэзия", 3 });
+                table: "BookAuthors",
+                columns: new[] { "AuthorId", "BookId" },
+                values: new object[,]
+                {
+                    { 2, 2 },
+                    { 5, 5 },
+                    { 3, 3 }
+                });
 
             migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "CategoryId", "IconPath", "Name", "ParentCategoryId" },
-                values: new object[] { 5, null, null, "Романы", 3 });
+                table: "BookDeliveryTypes",
+                columns: new[] { "BookId", "DeliveryTypeId" },
+                values: new object[,]
+                {
+                    { 2, 1 },
+                    { 5, 1 },
+                    { 3, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "BookPaymentTypes",
+                columns: new[] { "BookId", "PaymentTypeId" },
+                values: new object[,]
+                {
+                    { 2, 1 },
+                    { 5, 1 },
+                    { 3, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Books",
+                columns: new[] { "Id", "Available", "AvailableCount", "CategoryId", "Description", "HasPdf", "ISBN", "ImagePath", "Language", "PagesNumber", "PdfPath", "Percent", "Price", "PublishYear", "Title" },
+                values: new object[] { 6, true, 30, 4, "Эта книга - ваш личный тренер. Каждый день она будет поднимать боевой дух и заряжать на успех. Ее автор, знаменитая Джен Синсеро, призывает не сбавлять обороты на пути к успеху и ежедневно накачивать мышцы крутости в Духовном тренажерном зале. Успех - это способ существования, постоянной адаптации и роста.", false, "k5043", "/img/netupi.jpg", "Русский", 306, null, 0.0, 99.0, 2019, "Не тупи" });
+
+            migrationBuilder.InsertData(
+                table: "BookAuthors",
+                columns: new[] { "AuthorId", "BookId" },
+                values: new object[] { 1, 6 });
+
+            migrationBuilder.InsertData(
+                table: "BookDeliveryTypes",
+                columns: new[] { "BookId", "DeliveryTypeId" },
+                values: new object[] { 6, 1 });
+
+            migrationBuilder.InsertData(
+                table: "BookPaymentTypes",
+                columns: new[] { "BookId", "PaymentTypeId" },
+                values: new object[] { 6, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -699,6 +749,11 @@ namespace Library_Final_Project.Migrations
                 name: "IX_BookPaymentTypes_PaymentTypeId",
                 table: "BookPaymentTypes",
                 column: "PaymentTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Books_CategoryId",
+                table: "Books",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartBooks_BookId",
@@ -796,9 +851,6 @@ namespace Library_Final_Project.Migrations
                 name: "CartBooks");
 
             migrationBuilder.DropTable(
-                name: "Categories");
-
-            migrationBuilder.DropTable(
                 name: "FavoriteBooks");
 
             migrationBuilder.DropTable(
@@ -839,6 +891,9 @@ namespace Library_Final_Project.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderStates");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

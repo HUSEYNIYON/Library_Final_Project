@@ -1,6 +1,6 @@
-﻿using Library_Final_Project.Services.Author;
+﻿using Library.Services;
+using Library_Final_Project.Services.Author;
 using Library_Final_Project.Services.Book;
-using Library_Final_Project.Services.Category;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Library_Final_Project.Services
@@ -13,6 +13,7 @@ namespace Library_Final_Project.Services
             services.AddTransient<AuthorService>();
             services.AddTransient<CategoryService>();
             services.AddTransient<BookService>();
+            services.AddTransient<FileService>();
         }
     }
 }

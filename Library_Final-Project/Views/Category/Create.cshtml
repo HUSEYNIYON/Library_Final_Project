@@ -1,0 +1,18 @@
+﻿@model Library_Final_Project.DTOs.Category.CreateCategoryViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+<div asp-validation-summary="All"></div>
+<form action="Create" method="post" enctype="multipart/form-data">
+    <input class="form-control" type="text" asp-for="Name" placeholder="Name">
+    <input class="form-control" type="file" asp-for="File">
+    <select asp-for="ParentCategoryId">
+        @foreach (var item in Model.Categories)
+        {
+            <option value="@item.Key">@item.Value</option>
+        }
+    </select>
+    <input type="submit" value="Создать">
+</form>

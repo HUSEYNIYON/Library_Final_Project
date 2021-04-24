@@ -1,0 +1,28 @@
+﻿@model Library_Final_Project.DTOs.Category.EditCategoryViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+<div asp-validation-summary="All"></div>
+<form action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id">
+    <input type="text" asp-for="Name" placeholder="Name">
+    <input type="file" asp-for="File">
+    <img src="@Model.IconPath" alt="">
+    <select asp-for="ParentCategoryId">
+        <option value="">Ничего</option>
+        @foreach (var item in Model.Categories)
+        {
+            if (item.Key == Model.ParentCategoryId)
+            {
+                <option selected value="@item.Key">@item.Value</option>
+            }
+            else
+            {
+                <option value="@item.Key">@item.Value</option>
+            }
+        }
+    </select>
+    <input type="submit" value="Создать">
+</form>
