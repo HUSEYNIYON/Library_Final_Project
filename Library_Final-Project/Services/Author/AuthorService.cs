@@ -32,5 +32,9 @@ namespace Library_Final_Project.Services.Author
             await _context.Authors.AddAsync(author);
             await _context.SaveChangesAsync();
         }
+        public async Task<Dictionary<int,string>> GetAllInDictionaryAsync()
+        {
+            return await _context.Authors.ToDictionaryAsync(x => x.Id, x => x.Name);
+        }
     }
 }

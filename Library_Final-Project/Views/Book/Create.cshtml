@@ -1,0 +1,54 @@
+﻿@model Library_Final_Project.DTOs.Book.CreateBookViewModel
+
+@{       
+    ViewData["Title"] = "Create";
+}
+
+<form action="Create" method="post" enctype="multipart/form-data">
+    <br />
+    <input type="text" asp-for="Title" placeholder="Title" />
+    <br />
+    <input type="number" asp-for="Price" placeholder="Price" />
+    <br />
+    <input type="text" asp-for="ISBN" placeholder="ISBN" />
+    <br />
+    <input type="checkbox" asp-for="Available" />
+    <br />
+    <input type="number" asp-for="AvailableCount" placeholder="AvailableCount" />
+    <br />
+    <textarea asp-for="Description" cols="30" rows="10" placeholder="Description"></textarea>
+    <br />  
+    <input type="file" asp-for="Image" />
+    <br />
+    <input type="file" asp-for="PdfFile" />
+    <br />
+    <select multiple asp-for="DeliveryTypesId">
+        @foreach (var deliveryType in Model.DeliveryTypes)
+	    {
+    		<option value="@deliveryType.Key">@deliveryType.Value</option> 
+	    }
+    </select>
+    <br />
+    <select asp-for="CategoryId">
+        @foreach (var category in Model.Categories)
+	    {
+		    <option value="@category.Key">@category.Value</option>
+	    }
+    </select>
+    <br />
+    <select multiple asp-for="PaymentTypesId">
+        @foreach (var paymentType in Model.PaymentTypes)
+        {
+            <option value="@paymentType.Key">@paymentType.Value</option>
+        }
+    </select>
+    <br />
+    <select multiple asp-for="AuthorsId">
+        @foreach (var author in Model.Authors)
+        {
+            <option value="@author.Key">@author.Value</option>
+        }
+    </select>
+    <br />
+    <input type="submit"value="Создать" />
+</form>

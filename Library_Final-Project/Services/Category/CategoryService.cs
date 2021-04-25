@@ -68,7 +68,7 @@ namespace Library.Services
             }
         }
 
-        public async Task<Dictionary<int, string>> GetCategoriesDictionary(int? id = null)
+        public async Task<Dictionary<int, string>> GetAllInDictionaryAsync(int? id = null)
         {
             var categories = await _context.Categories.ToListAsync();
 

@@ -26,7 +26,7 @@ namespace Library_Final_Project.Controllers
         {
             return View(new CreateCategoryViewModel
             {
-                Categories = await _categoryService.GetCategoriesDictionary()
+                Categories = await _categoryService.GetAllInDictionaryAsync()
             });
         }
         [HttpPost]
@@ -34,7 +34,7 @@ namespace Library_Final_Project.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Categories = await _categoryService.GetCategoriesDictionary();
+                model.Categories = await _categoryService.GetAllInDictionaryAsync();
                 return View(model);
             }
 
@@ -56,7 +56,7 @@ namespace Library_Final_Project.Controllers
             return View(new EditCategoryViewModel
             {
                 Id = category.Id,
-                Categories = await _categoryService.GetCategoriesDictionary(id),
+                Categories = await _categoryService.GetAllInDictionaryAsync(id),
                 Name = category.Name,
                 IconPath = category.IconPath,
                 ParentCategoryId = category.ParentCategoryId
@@ -68,7 +68,7 @@ namespace Library_Final_Project.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Categories = await _categoryService.GetCategoriesDictionary(model.Id);
+                model.Categories = await _categoryService.GetAllInDictionaryAsync(model.Id);
                 return View(model);
             }
 
