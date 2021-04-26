@@ -1,0 +1,157 @@
+﻿@model Library_Final_Project.DTOs.Book.UpdateBookViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div class="container" style="background-color: #fff;">
+    <div class="col-md-12">
+        <h2 class="text-center pt-5">Редактировать книгу</h2>
+        <form action="Update" method="post" enctype="multipart/form-data">
+            <div class="row mt-4">
+                <div class="col-md-6 offset-1">
+                    <label asp-for="Title" class="form-label bg-outline-success">Название книги</label>
+                    <input type="text" class="form-control mb-3" asp-for="Title" placeholder="Title">
+                    <label asp-for="Title" class="form-label bg-outline-success">Цена</label>
+                    <input type="number" class="form-control" asp-for="Price" placeholder="Price">
+                    <div class="form-check  mt-4">
+                        <input type="checkbox" class="form-check-input" id="flexCheckIndeterminate" asp-for="Available">
+                        <label class="form-check-label" for="for=" flexCheckIndeterminate"">
+                            Есть в наличие
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-3 offset-2">
+                    <input type="hidden" asp-for="Id">
+                    <img width="200" src="@Model.PrevImagePath" alt="">
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-3 offset-1">
+                    <label asp-for="ISBN" class="form-label bg-outline-success">ISBN</label>
+                    <input type="text" class="form-control" asp-for="ISBN" placeholder="ISBN">
+                </div>
+                <div class="col-md-3 ">
+                    <label asp-for="AvailableCount" class="form-label bg-outline-success">Количество</label>
+                    <input type="number" class="form-control" asp-for="AvailableCount" placeholder="AvailableCount">
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-10 offset-1">
+                    <label for="exampleFormControlTextarea1" class="form-label">Описание</label>
+                    <textarea asp-for="Description" class="form-control" cols="30" rows="5" placeholder="Описание"></textarea>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-1 offset-1">
+                    <label asp-for="Percent" class="form-label bg-outline-success">Процент</label>
+                    <input type="number" max="100" min="0" asp-for="Percent" placeholder="Процент">
+                </div>
+                <div class="col-md-2 offset-1 ">
+                    <label asp-for="PagesNumber" class="form-label bg-outline-success">Количество страниц</label>
+                    <input type="number" asp-for="PagesNumber" placeholder="Количество страниц">
+                </div>
+                <div class="col-md-3 offset-1">
+                    <label asp-for="PublishYear" class="form-label bg-outline-success">Год выпуска</label>
+                    <input type="number" asp-for="PublishYear" placeholder="Год выпуска">
+                </div>
+                <div class="col-md-1">
+                    <label asp-for="Language" class="form-label bg-outline-success">Язык</label>
+                    <select asp-for="Language">
+                        @if (Model.Language == "Русский")
+                        {
+                            <option selected value="Русский">Русский</option>
+                            <option value="Английский">Английский</option>
+                        }
+                        else
+                        {
+                            <option selected value="Английский">Английский</option>
+                            <option value="Русский">Русский</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <input type="hidden" asp-for="PrevImagePath">
+            <div class="row mt-5">
+                <div class="col-md-2 offset-1">
+                    <label class="form-label">Вид доставки</label>
+                    <select multiple asp-for="DeliveryTypesId">
+                        @foreach (var deliveryType in Model.DeliveryTypes)
+                        {
+                            if (Model.DeliveryTypesId.Contains(deliveryType.Key))
+                            {
+                                <option selected value="@deliveryType.Key">@deliveryType.Value</option>
+                            }
+                            else
+                            {
+                                <option value="@deliveryType.Key">@deliveryType.Value</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Вид доставки</label>
+                    <select multiple asp-for="PaymentTypesId">
+                        @foreach (var paymentType in Model.PaymentTypes)
+                        {
+                            if (Model.PaymentTypesId.Contains(paymentType.Key))
+                            {
+                                <option selected value="@paymentType.Key">@paymentType.Value</option>
+                            }
+                            else
+                            {
+                                <option value="@paymentType.Key">@paymentType.Value</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2 offset-1">
+                    <label class="form-label">Вид доставки</label>
+                    <select multiple asp-for="AuthorsId">
+                        @foreach (var author in Model.Authors)
+                        {
+                            if (Model.AuthorsId.Contains(author.Key))
+                            {
+                                <option selected value="@author.Key">@author.Value</option>
+                            }
+                            else
+                            {
+                                <option value="@author.Key">@author.Value</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Вид доставки</label>
+                    <select asp-for="CategoryId">
+                        @foreach (var category in Model.Categories)
+                        {
+                            if (Model.CategoryId == category.Key)
+                            {
+                                <option selected value="@category.Key">@category.Value</option>
+                            }
+                            else
+                            {
+                                <option value="@category.Key">@category.Value</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-5 pb-5">
+                <div class="col-md-3 offset-1">
+                    <label class="form-label">Выбрать картинку</label>
+                    <input type="file" asp-for="Image">
+                </div>
+                <div class="col-md-3 offset-1">
+                    <label class="form-label">Выбрать картинку</label>
+                    <input type="file" asp-for="PdfFile">
+                </div>
+                <div class="col-md-2 offset-1 mt-4">
+                    <input type="submit" class="btn btn-primary" value="Редактировать">
+                    </div>
+                </div>
+</form>
+        </div>
+    </div>

@@ -6,9 +6,6 @@ using Library_Final_Project.Services.Book;
 using Library_Final_Project.Services.DeliveryType;
 using Library_Final_Project.Services.PaymentType;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Library_Final_Project.Controllers
@@ -68,6 +65,42 @@ namespace Library_Final_Project.Controllers
                 imagePath = await _fileService.AddFileAsync(model.Image);   
             }
             await _bookService.CreateAsync(model, imagePath, pdfPath);
+            return RedirectToAction("GetBooks");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            var book = await _bookService.GetByIdAsync(id);
+            book.Authors = await _authorService.GetAllInDictionaryAsync();
+            book.PaymentTypes = await _paymentTypeService.GetAllInDictionaryAsync();
+            book.DeliveryTypes = await _deliveryTypeService.GetAllInDictionaryAsync();
+            book.Categories = await _categoryService.GetAllInDictionaryAsync();
+            return View(book);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(UpdateBookViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                model.Authors = await _authorService.GetAllInDictionaryAsync();
+                model.DeliveryTypes = await _deliveryTypeService.GetAllInDictionaryAsync();
+                model.PaymentTypes = await _paymentTypeService.GetAllInDictionaryAsync();
+                model.Categories = await _categoryService.GetAllInDictionaryAsync();
+                return View();
+            }
+            string imagePath = model.PrevImagePath;
+            if(model.Image != null)
+            {
+                _fileService.DeleteFile(imagePath);
+                imagePath = await _fileService.AddFileAsync(model.Image);
+            }
+            string pdfPath = model.PrevPdfPath;
+            if(model.PdfFile != null)
+            {
+                _fileService.DeleteFile(pdfPath);
+                pdfPath = await _fileService.AddFileAsync(model.PdfFile);
+            }
+            await _bookService.UpdateAsync(model, imagePath, pdfPath);
             return RedirectToAction("GetBooks");
         }
     }

@@ -68,5 +68,109 @@ namespace Library_Final_Project.Services.Book
             await _context.BookAuthors.AddRangeAsync(bookAuthors);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<UpdateBookViewModel> GetByIdAsync (int id)
+        {
+            return await _context.Books.Where(x => x.Id == id).Include(x => x.BookAuthors).ThenInclude(x => x.Author).Include(x => x.Category).Include(x => x.BookDeliveryTypes).Include(x => x.BookPaymentTypes).Select(x => new UpdateBookViewModel
+            {
+                AuthorsId = x.BookAuthors.Select(p => p.AuthorId).ToList(),
+                Available = x.Available,
+                CategoryId = x.CategoryId,
+                Description = x.Description,
+                Id = x.Id,
+                PrevImagePath = x.ImagePath,
+                Language = x.Language,
+                Percent = x.Percent,
+                Price = x.Price,
+                Title = x.Title,
+                AvailableCount = x.AvailableCount,
+                PagesNumber = x.PagesNumber,
+                ISBN = x.ISBN,
+                PublishYear = x.PublishYear,
+                DeliveryTypesId = x.BookDeliveryTypes.Select(t => t.DeliveryTypeId).ToList(),
+                PaymentTypesId = x.BookPaymentTypes.Select(m => m.PaymentTypeId).ToList(),
+                PrevPdfPath = x.PdfPath
+            }).FirstOrDefaultAsync();
+        }
+        public async Task UpdateAsync(UpdateBookViewModel model, string imagePath, string pdfPath)
+        {
+            var book = await _context.Books.FindAsync(model.Id);
+            if(book == null)
+            {
+                return;
+            }
+
+            book.Available = model.Available;
+            book.CategoryId = model.CategoryId;
+            book.Description = model.Description;
+            book.Language = model.Language;
+            book.Percent = model.Percent;
+            book.Price = model.Price;
+            book.Title = model.Title;
+            book.AvailableCount = model.AvailableCount;
+            book.HasPdf = pdfPath != null;
+            book.PdfPath = pdfPath;
+            book.ISBN = model.ISBN;
+            book.ImagePath = imagePath;
+            book.PagesNumber = model.PagesNumber;
+            book.PublishYear = model.PublishYear;
+            var paymentTypeIds = await _context.BookPaymentTypes.Where(x => x.BookId == book.Id).Select(x => x.PaymentTypeId).ToListAsync();
+            var prevPaymentTypeIds = new List<int>();
+            var newBookPaymentTypes = new List<BookPaymentType>();
+            foreach (var id in paymentTypeIds)
+            {
+                if (!model.PaymentTypesId.Contains(id))
+                    prevPaymentTypeIds.Add(id);
+            }
+            foreach (var paymentTypeId in model.PaymentTypesId)
+            {
+                if(!paymentTypeIds.Contains(paymentTypeId))
+                {
+                    newBookPaymentTypes.Add(new BookPaymentType { BookId = book.Id, PaymentTypeId = paymentTypeId });
+                }
+            }
+            var prevBookPaymentTypes = await _context.BookPaymentTypes.Where(x => x.BookId == book.Id && prevPaymentTypeIds.Contains(x.PaymentTypeId)).ToListAsync();
+            _context.BookPaymentTypes.RemoveRange(prevBookPaymentTypes);
+            await _context.BookPaymentTypes.AddRangeAsync(newBookPaymentTypes);
+
+            var deliveryTypeIds = await _context.BookDeliveryTypes.Where(x => x.BookId == book.Id).Select(x => x.DeliveryTypeId).ToListAsync();
+            var prevDeliveryTypeIds = new List<int>();
+            var newBookDeliveryTypes = new List<BookDeliveryType>();
+            foreach (var id in deliveryTypeIds)
+            {
+                if (!model.DeliveryTypesId.Contains(id))
+                {
+                    prevDeliveryTypeIds.Add(id);
+                }
+            }
+            foreach (var deliveryTypeId in model.DeliveryTypesId)
+            {
+                if (!deliveryTypeIds.Contains(deliveryTypeId))
+                {
+                    newBookDeliveryTypes.Add(new BookDeliveryType { BookId = book.Id, DeliveryTypeId = deliveryTypeId });
+                }
+            }
+            var prevBookDeliveTypes = await _context.BookDeliveryTypes.Where(x => x.BookId == book.Id && prevPaymentTypeIds.Contains(x.DeliveryTypeId)).ToListAsync();
+            _context.BookDeliveryTypes.RemoveRange(prevBookDeliveTypes);
+            await _context.BookDeliveryTypes.AddRangeAsync(newBookDeliveryTypes);
+
+            var authorsId = await _context.BookAuthors.Where(x => x.BookId == book.Id).Select(x => x.AuthorId).ToListAsync();
+            var prevAuthorsId = new List<int>();
+            var newBookAuthors = new List<BookAuthor>();
+            foreach (var id in authorsId)
+            {
+                if (!model.AuthorsId.Contains(id))
+                    prevAuthorsId.Add(id);
+            }
+            foreach (var authorId in model.AuthorsId)
+            {
+                if (!authorsId.Contains(authorId))
+                    newBookAuthors.Add(new BookAuthor { BookId = book.Id, AuthorId = authorId });
+            }
+            var prevBookAuthors = await _context.BookAuthors.Where(x => x.BookId == book.Id && prevAuthorsId.Contains(x.AuthorId)).ToListAsync();
+            _context.BookAuthors.RemoveRange(prevBookAuthors);
+            await _context.BookAuthors.AddRangeAsync(newBookAuthors);
+            await _context.SaveChangesAsync();
+        }
     }
 }
