@@ -103,5 +103,12 @@ namespace Library_Final_Project.Controllers
             await _bookService.UpdateAsync(model, imagePath, pdfPath);
             return RedirectToAction("GetBooks");
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _bookService.Delete(id);
+            return RedirectToAction("GetBooks");
+        }
     }
 }

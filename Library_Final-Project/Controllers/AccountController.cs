@@ -1,7 +1,9 @@
-﻿using Library_Final_Project.DTOs;
+﻿using Library_Final_Project.Common;
+using Library_Final_Project.DTOs;
 using Library_Final_Project.DTOs.User;
 using Library_Final_Project.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace Library_Final_Project.Controllers
@@ -20,20 +22,24 @@ namespace Library_Final_Project.Controllers
         {
             return View(new SignInViewModel { ReturnUrl = returnUrl });
         }
+
         [HttpPost]
-        public async Task<IActionResult> SignIn(SignInViewModel model)
+        public async Task<JsonResult> SignIn(SignInViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return View(model);
+                return Json(JsonConvert.SerializeObject(new Response { Succeeded = false, Message = "Неправильно заполнены поля" }));
             }
+
             var result = await _userService.SignInAsync(model);
+
             if (result.Succeeded)
             {
-                return Redirect(model.ReturnUrl ?? "/Home/Index");
+                return Json(JsonConvert.SerializeObject(new Response { Succeeded = true }));
             }
-            ModelState.AddModelError("SignIn", "Логин или пароль неверный");
-            return View(model);
+
+            return Json(JsonConvert.SerializeObject(new Response
+            { Message = "Логин или пароль неверны", Succeeded = false }));
         }
 
         [HttpGet]
@@ -41,33 +47,37 @@ namespace Library_Final_Project.Controllers
         {
             return View();
         }
+
         [HttpPost]
-        public async Task<IActionResult> SignUp(SignUpViewModel model)
+        public async Task<JsonResult> SignUp(SignUpViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return Json(JsonConvert.SerializeObject(new Response { Succeeded = false, Message = "Неправильно заполнены поля" }));
             }
 
             var result = await _userService.SignUpAsync(model);
 
             if (result.Succeeded)
             {
-                return RedirectToAction("SignIn");
+                return Json(JsonConvert.SerializeObject(new Response { Succeeded = true }));
             }
+
+            string message = "q";
 
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError(error.Code, error.Description);
+                message += $"{error.Description}\n";
             }
 
-            return View(model);
+            return Json(JsonConvert.SerializeObject(new Response { Succeeded = false, Message = message }));
         }
 
         public async Task<IActionResult> SignOut()
         {
             await _userService.SignOutAsync();
-            return RedirectToAction("Index","Home");
+
+            return RedirectToAction("index","Home");
         }
     }
 }

@@ -172,5 +172,16 @@ namespace Library_Final_Project.Services.Book
             await _context.BookAuthors.AddRangeAsync(newBookAuthors);
             await _context.SaveChangesAsync();
         }
+
+        public async Task Delete(int id)
+        {
+            var book = await _context.Books.FindAsync(id);
+            if(book == null)
+            {
+                return;
+            }
+            _context.Books.Remove(book);
+            await _context.SaveChangesAsync();
+        }
     }
 }

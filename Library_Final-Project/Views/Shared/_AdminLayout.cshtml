@@ -1,17 +1,185 @@
 ﻿<!DOCTYPE html>
-
-<html>
+<html lang="ru">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/adminstyle.css" />
-    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>the book | @ViewData["Title"]</title>
+    <link rel="icon" type="image/x-icon" href="~/images/icons/logo.ico" />
+    <link href="~/css/loader.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/main.css" rel="stylesheet" type="text/css">
+    <link href="~/css/perfect-scrollbar.css" rel="stylesheet" type="text/css">
+    <link href="~/css/structure.css" rel="stylesheet" type="text/css">
+    <link href="~/css/monokai-sublime.css" rel="stylesheet" type="text/css">
+    <link href="~/css/Snackbar.css" rel="stylesheet" />
 </head>
 <body>
-        @RenderBody()
+    <div id="load_screen">
+        <div class="loader">
+            <div class="loader-content">
+                <div class="spinner-grow align-self-center"></div>
+            </div>
+        </div>
+    </div>
+    <div class="header-container fixed-top">
+        <header class="header navbar navbar-expand-sm">
+            <ul class="navbar-item theme-brand flex-row  text-center">
+                <li class="nav-item theme-text">
+                    <a asp-action="Index" asp-controller="AdminPanel" class="nav-link">the Book</a>
+                </li>
+            </ul>
+            <ul class="navbar-item flex-row ml-md-auto">
+                <li class="nav-item dropdown user-profile-dropdown">
+                    <a href="javascript:void(0);" class="nav-link text-light dropdown-toggle user" id="userProfileDropdown"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        @User.Identity.Name
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-user">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>
+                    <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                        <div class="">
+                            <div class="dropdown-item">
+                                <a asp-action="SignOut" asp-controller="Account">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                         class="feather feather-user">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg> Профиль
+                                </a>
+                            </div>
+                            <div class="dropdown-item">
+                                <a asp-action="SignOut" asp-controller="Account">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                         stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out">
+                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                        <polyline points="16 17 21 12 16 7"></polyline>
+                                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                                    </svg> Выход
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </header>
+    </div>
+    <div class="sub-header-container">
+        <header class="header navbar navbar-expand-sm">
+            <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="feather feather-menu">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </a>
+            <ul class="navbar-nav flex-row">
+                <li>
+                    <div class="page-header">
+                        <nav class="breadcrumb-one" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a asp-controller="AdminPanel" asp-action="index">Главная</a></li>
+                            </ol>
+                        </nav>
+
+                    </div>
+                </li>
+            </ul>
+        </header>
+    </div>
+    <div class="main-container" id="container">
+        <div class="overlay"></div>
+        <div class="search-overlay"></div>
+        <div class="sidebar-wrapper sidebar-theme">
+            <nav id="sidebar">
+                <div class="shadow-bottom"></div>
+                <ul class="list-unstyled menu-categories" id="accordionExample">
+                    <li class="menu">
+                        <a href="#books" data-toggle="collapse" aria-expanded="false"
+                           class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                                <span>Книги</span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="feather feather-chevron-right">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled" id="books" data-parent="#accordionExample">
+                            <li>
+                                <a asp-controller="book" asp-action="getbooks">Список</a>
+                                <a asp-controller="Book" asp-action="Create">Добавить</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu">
+                        <a href="#authors" data-toggle="collapse" aria-expanded="false"
+                           class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                <span>Авторы</span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="feather feather-chevron-right">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled" id="authors" data-parent="#accordionExample">
+                            <li>
+                                <a asp-controller="Author" asp-action="GetAuthors">Список</a>
+                                <a asp-controller="Author" asp-action="Create">Добавить</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu">
+                        <a href="#" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                <span>Авторы</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div id="content" class="main-content">
+            <div class="layout-px-spacing">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <script src="~/js/jquery-3.1.1.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/perfect-scrollbar.min.js"></script>
+    <script src="~/js/app.js"></script>
+    <script>
+        window.addEventListener("load", function () {
+            var load_screen = document.getElementById("load_screen");
+            document.body.removeChild(load_screen);
+        });
+        $(document).ready(function () {
+            App.init();
+        });
+    </script>
+    <script src="~/js/Snackbar.js"></script>
 </body>
 </html>

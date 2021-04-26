@@ -1,84 +1,159 @@
-﻿@model Library_Final_Project.DTOs.User.SignUpViewModel
-
-@{
-    ViewBag.Title = "SignUp";
+﻿@{
     Layout = null;
 }
 <!DOCTYPE html>
+<html lang="en">
 
-<html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/adminstyle.css" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>the Book | Регистрация</title>
+    <link rel="icon" type="image/x-icon" href="~/images/icons/logo.ico" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/main.css" rel="stylesheet" type="text/css">
+    <link href="~/css/Account/form-2.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Snackbar.css" rel="stylesheet" />
+    <script src="~/js/jquery-3.1.1.min.js"></script>
+    <!-- END GLOBAL MANDATORY STYLES -->
 </head>
-<body>
-    <div class="containerr">
-        <div class="form-containerr">
-            <div class="form-bodyr">
-                <a asp-controller="Home" asp-action="index">
-                    <img src="~/img/close.png" width="25" style="margin-left:520px;position:absolute; margin-top: -70px;" alt="Alternate Text" />
-                </a>
-                <div class="headerr">
-                    <h2>Зарегистрироваться</h2>
-                    <p>Есть аккаунт? <a asp-controller="Account" asp-action="SignIn">Войти!</a></p>
-                </div>
-                <div class="form-groupr">
-                    <form action="SignUp" method="post">
-                        <div class="input-groupr">
-                            <i class="fa fa-user"></i>
-                            <input type="text" autocomplete="none" asp-for="Login" placeholder="Логин">
-                            <span class="text-danger" asp-validation-for="Login"></span>
-                        </div>
-                        <div class="input-groupr">
-                            <i class="fa fa-envelope"></i>
-                            <input type="text" autocomplete="none" asp-for="Email" placeholder="кто-то@examle.com">
-                            <span class="text-danger" asp-validation-for="Email"></span>
-                        </div>
-                        <div class="input-groupr">
-                            <i class="fa fa-lock"></i>
-                            <input type="password" asp-for="Password" placeholder="Придумайте пароль">
-                            <span class="text-danger" asp-validation-for="Password"></span>
-                        </div>
-                        <div class="input-groupsr flex">
-                            <div class="forgotr">
-                                <a href="#">забыл пароль?</a>
-                                <div asp-validation-summary="All"></div>
+
+<body class="form">
+
+
+    <div class="form-container outer">
+        <div class="form-form">
+            <div class="form-form-wrap">
+                <div class="form-container">
+                    <div class="form-content">
+
+                        <h1 class="">Регистрация</h1>
+                        <p class="signup-link register">
+                            У вас уже есть аккаунт? <a asp-action="SignIn" asp-controller="Account">Вход</a>
+                        </p>
+                        <form class="text-left" onsubmit="event.preventDefault()">
+                            <div class="form">
+
+                                <div id="username-field" class="field-wrapper input">
+                                    <label for="username">Login</label>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" class="feather feather-user">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    <input id="username" name="username" type="text" class="form-control"
+                                           placeholder="Login">
+                                </div>
+
+                                <div id="email-field" class="field-wrapper input">
+                                    <label for="email">Email</label>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" class="feather feather-at-sign register">
+                                        <circle cx="12" cy="12" r="4"></circle>
+                                        <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
+                                    </svg>
+                                    <input id="email" name="email" type="text" value="" class="form-control"
+                                           placeholder="Email">
+                                </div>
+
+                                <div id="password-field" class="field-wrapper input mb-2">
+                                    <div class="d-flex justify-content-between">
+                                        <label for="password">Пароль</label>
+                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" class="feather feather-lock">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                    </svg>
+                                    <input id="password" name="password" type="password" class="form-control"
+                                           placeholder="Пароль">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" id="toggle-password" class="feather feather-eye">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </div>
+
+                                <div class="d-sm-flex justify-content-between">
+                                    <div class="field-wrapper">
+                                        <button type="submit" class="btn btn-primary"
+                                                onclick="register()">
+                                            Зарегистрироваться!
+                                        </button>
+                                    </div>
+                                </div>
+
+
+
                             </div>
-                        </div>
-                        <div class="input-groupsr rightr">
-                            <button>Зарегистрироваться</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="social-mediar">
-                    <a href="#" class="social-iconr">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="social-iconr">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="social-iconr">
-                        <i class="fab fa-google"></i>
-                    </a>
-                    <a href="#" class="social-iconr">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="form-imager">
-                <div class="textr">
-                    <h2>Добро пожаловать.</h2>
-                    <p>
-                        Родился — регистрация, женился — регистрация, умер — опять регистрация.
-                        Не для того родится человек на свет Божий, чтобы зарегистрироваться.!
-                    </p>
+                        </form>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/Snackbar.js"></script>
+
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
+    <script>
+        var togglePassword = document.getElementById("toggle-password");
+        var formContent = document.getElementsByClassName('form-content')[0];
+        var getFormContentHeight = formContent.clientHeight;
+
+        var formImage = document.getElementsByClassName('form-image')[0];
+        if (formImage) {
+            var setFormImageHeight = formImage.style.height = getFormContentHeight + 'px';
+        }
+        if (togglePassword) {
+            togglePassword.addEventListener('click', function () {
+                var x = document.getElementById("password");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+            });
+        }
+
+        function register() {
+            let email = document.getElementById("email").value;
+            let pass = document.getElementById("password").value;
+            let user = document.getElementById("username").value;
+            $.ajax({
+                cache: false,
+                method: "POST",
+                data: { "Login" : user, "Email": email, "Password": pass },
+                url: "/Account/SignUp",
+                success: function (data) {
+                    let response = JSON.parse(data);
+                    if (response.Succeeded) {
+                        window.location.replace("/Account/SignIn");
+                    }
+                    else {
+                        Snackbar.show({
+                            text: response.Message,
+                            pos: 'bottom-right',
+                            actionTextColor: '#fff',
+                            backgroundColor: '#e7515a'
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+
 </body>
+
 </html>
