@@ -2,24 +2,29 @@
 @{ 
     Layout = "_AdminLayout";
 }
-<div class="card">
-    <div class="card-body">
-        <table class="table table-hover table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var author in Model)
-                {
-            <tr>
-                <td>@author.Id</td>
-                <td>@author.Name</td>
-                </tr>
-            }
-                </tbody>
-            </table>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-hover table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th  style="font-size: 24px;">Id</th>
+                            <th  style="font-size: 24px;">Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var author in Model)
+                        {
+                            <tr>
+                                <td  style="font-size: 24px;">@author.Id</td>
+                                <td  style="font-size: 24px;">@author.Name</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

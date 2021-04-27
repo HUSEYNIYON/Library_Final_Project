@@ -32,6 +32,15 @@ namespace Library_Final_Project.Services.Author
             await _context.Authors.AddAsync(author);
             await _context.SaveChangesAsync();
         }
+        
+        public async Task Delete(int id)
+        {
+            var author = await _context.Authors.FindAsync(id);
+            if (author == null)
+                return;
+            _context.Authors.Remove(author);
+            await _context.SaveChangesAsync();
+        }
         public async Task<Dictionary<int,string>> GetAllInDictionaryAsync()
         {
             return await _context.Authors.ToDictionaryAsync(x => x.Id, x => x.Name);

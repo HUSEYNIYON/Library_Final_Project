@@ -1,4 +1,5 @@
 ﻿using Library.Services;
+using Library_Final_Project.Common.Pagination;
 using Library_Final_Project.DTOs.Book;
 using Library_Final_Project.Services;
 using Library_Final_Project.Services.Author;
@@ -18,13 +19,15 @@ namespace Library_Final_Project.Controllers
         private readonly CategoryService _categoryService;
         private readonly DeliveryTypeService _deliveryTypeService;
         private readonly PaymentTypeService _paymentTypeService;
+        private readonly LibraryDbContext _context;
 
         public BookController(BookService bookService,
                               FileService fileService,
                               AuthorService authorService,
                               CategoryService categoryService,
                               DeliveryTypeService deliveryTypeService,
-                              PaymentTypeService paymentTypeService)
+                              PaymentTypeService paymentTypeService,
+                              LibraryDbContext context)
         {
             _bookService = bookService;
             _fileService = fileService;
@@ -32,6 +35,11 @@ namespace Library_Final_Project.Controllers
             _categoryService = categoryService;
             _deliveryTypeService = deliveryTypeService;
             _paymentTypeService = paymentTypeService;
+            _context = context;
+        }
+        public async Task<IActionResult> Index(int pageNumber = 1)
+        {
+            return View(await PaginatedList<Entities.Book>.CreateAsync(_context.Books, pageNumber, 8));
         }
         public async Task<IActionResult> GetBooks()
         {

@@ -1,0 +1,44 @@
+﻿@model Library_Final_Project.Common.Pagination.PaginatedList<Library_Final_Project.Entities.Book>
+
+
+<div class="container-fluid">
+    <div class="row">
+            @foreach (var book in Model)
+            {
+        <div class="col-md-2">
+                <div class="flip-card" style="margin: 10px; margin-bottom: 15px; display: inline-block">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front" style="background-color: #036bcf;">
+                            <img src="@book.ImagePath" alt="Avatar" style="width:260px;height:300px;">
+                            <p style="background-color: white; padding: 5px;" class="text-secondary"><b>@book.Title</b></p>
+                            <p style="color: white; font-size: 1.6rem; padding-bottom: 8px"> @book.Price смн</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="padding: 5px; padding-top: 45px;">@book.Title</h4>
+                            <p style="padding: 10px">AuthorName</p>
+                            <p>We love that guy</p>
+                            <button class="btn btn-lg mt-lg-5 btn-outline-light">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-basket2" viewBox="0 0 16 16">
+                                    <path d="M4 10a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 1 1 2 0v2a1 1 0 0 1-2 0v-2z" />
+                                    <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-.623l-1.844 6.456a.75.75 0 0 1-.722.544H3.69a.75.75 0 0 1-.722-.544L1.123 8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.163 8l1.714 6h8.246l1.714-6H2.163z" />
+                                </svg> | В корзину
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="col-md-1"></div>
+            }
+    </div>
+</div>
+
+@{
+    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.NextPage ? "disabled" : "";
+}
+<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-danger @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-primary @nextDisabled">
+    Next
+</a>

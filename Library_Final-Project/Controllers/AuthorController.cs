@@ -32,7 +32,7 @@ namespace Library_Final_Project.Controllers
         [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> Create(CreateAuthorViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -40,5 +40,11 @@ namespace Library_Final_Project.Controllers
             return RedirectToAction("GetAuthors");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _authorService.Delete(id);
+            return RedirectToAction(nameof(GetAuthors));
+        }
     }
 }

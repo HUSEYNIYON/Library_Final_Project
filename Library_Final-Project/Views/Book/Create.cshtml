@@ -1,10 +1,8 @@
 ﻿@model Library_Final_Project.DTOs.Book.CreateBookViewModel
-
 @{       
     ViewData["Title"] = "Create";
     Layout = "_AdminLayout";
 }
-
 <div class="container" style="background-color: #fff;">
         <div class="col-md-12">
             <h2 class="text-center pt-5">Форма заполнение книг</h2>
@@ -14,7 +12,6 @@
                         <label asp-for="Title" class="form-label bg-outline-success">Название книги</label>
                         <input type="text" asp-for="Title" class="form-control" placeholder="Название книги" />
                     </div>
-
                     <div class="col-md-4">
                         <label asp-for="Price" class="form-label">Цена</label>
                         <input type="number" asp-for="Price" class="form-control" placeholder="Цена" />
