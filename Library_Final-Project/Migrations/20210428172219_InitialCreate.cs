@@ -247,25 +247,6 @@ namespace Library_Final_Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Carts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Carts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Carts_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Books",
                 columns: table => new
                 {
@@ -403,23 +384,23 @@ namespace Library_Final_Project.Migrations
                 name: "CartBooks",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
                     BookId = table.Column<int>(type: "int", nullable: false),
-                    CartId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Count = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CartBooks", x => x.Id);
+                    table.PrimaryKey("PK_CartBooks", x => new { x.BookId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_CartBooks_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CartBooks_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CartBooks_Carts_CartId",
-                        column: x => x.CartId,
-                        principalTable: "Carts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -587,7 +568,7 @@ namespace Library_Final_Project.Migrations
                 columns: new[] { "Id", "Available", "AvailableCount", "CategoryId", "Description", "HasPdf", "ISBN", "ImagePath", "Language", "PagesNumber", "PdfPath", "Percent", "Price", "PublishYear", "Title" },
                 values: new object[,]
                 {
-                    { 1, true, 100, 1, "«„Я похож на сумасшедшего?“ — спросил меня Илон Маск». О чем книга В книге «Илон Маск: Tesla, SpaceX и дорога в будущее» автор представляет независимый и разносторонний взгляд на жизнь и достижения самого яркого предпринимателя Кремниевой долины.", false, "148419606", "/img/ilon.jpg", "Русский", 390, null, 0.0, 124.0, 2019, "Вэнс Эшли: Илон Маск. Tesla, SpaceX и дорога в будущее" },
+                    { 1, true, 100, 1, "«„Я похож на сумасшедшего?“ — спросил меня Илон Маск». О чем книга В книге «Илон Маск: Tesla, SpaceX и дорога в будущее» автор представляет независимый и разносторонний взгляд на жизнь и достижения самого яркого предпринимателя Кремниевой долины.", false, "148419606", "/img/ilon.jpg", "Русский", 390, null, 0.0, 124.0, 2019, "Вэнс Эшли: Илон Маск. Tesla, SpaceX" },
                     { 4, true, 606, 1, "В основу книги Уолтера Айзексона Стив Джобс легли беседы с самим Стивом Джобсом, а также с его родственниками, друзьями, врагами, соперниками и коллегами. Джобс никак не контролировал автора. Он откровенно отвечал на все вопросы и ждал такой же честности от остальных.", false, "240540450", "/img/stivjobs.jpg", "Русский", 100, null, 0.0, 146.0, 2017, "Айзексон Уолтер: Стив Джобс. Биография" }
                 });
 
@@ -756,18 +737,8 @@ namespace Library_Final_Project.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartBooks_BookId",
+                name: "IX_CartBooks_UserId",
                 table: "CartBooks",
-                column: "BookId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CartBooks_CartId",
-                table: "CartBooks",
-                column: "CartId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Carts_UserId",
-                table: "Carts",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -873,9 +844,6 @@ namespace Library_Final_Project.Migrations
 
             migrationBuilder.DropTable(
                 name: "PaymentTypes");
-
-            migrationBuilder.DropTable(
-                name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "Orders");

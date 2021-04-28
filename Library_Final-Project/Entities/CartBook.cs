@@ -2,10 +2,10 @@
 {
     public class CartBook
     {
-        public uint Id { get; set; }
         public int BookId { get; set; }
-        public int CartId { get; set; }
+        public string UserId { get; set; }
+        public int Count { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public virtual Book Book { get; set; }
-        public virtual Cart Cart { get; set; }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Library.Services;
-using Library_Final_Project.Common.Pagination;
 using Library_Final_Project.DTOs.Book;
 using Library_Final_Project.Services;
 using Library_Final_Project.Services.Author;
@@ -39,7 +38,8 @@ namespace Library_Final_Project.Controllers
         }
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            return View(await PaginatedList<Entities.Book>.CreateAsync(_context.Books, pageNumber, 8));
+            var books = await _bookService.GetPagedBookAsync(pageNumber, 10);
+            return View(books);
         }
         public async Task<IActionResult> GetBooks()
         {
@@ -112,7 +112,6 @@ namespace Library_Final_Project.Controllers
             return RedirectToAction("GetBooks");
         }
 
-        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _bookService.Delete(id);

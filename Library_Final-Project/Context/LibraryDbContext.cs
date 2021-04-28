@@ -16,7 +16,6 @@ public class LibraryDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<BookAuthor> BookAuthors { get; set; }
     public DbSet<BookDeliveryType> BookDeliveryTypes { get; set; }
     public DbSet<BookPaymentType> BookPaymentTypes { get; set; }
-    public DbSet<Cart> Carts { get; set; }
     public DbSet<CartBook> CartBooks { get; set; }
     public DbSet<DeliveryType> DeliveryTypes { get; set; }
     public DbSet<FavoriteBook> FavoriteBooks { get; set; }
@@ -32,9 +31,8 @@ public class LibraryDbContext : IdentityDbContext<ApplicationUser>
         base.OnModelCreating(builder);
 
         builder.Entity<Category>().HasOne(x => x.ParentCategory).WithMany().HasForeignKey(x => x.ParentCategoryId);
-
+        builder.Entity<CartBook>().HasKey(x => new { x.BookId, x.UserId });
         builder.Entity<BookDeliveryType>().HasKey(x => new { x.BookId, x.DeliveryTypeId });
-
         builder.Entity<BookPaymentType>().HasKey(x => new { x.BookId, x.PaymentTypeId });
         builder.Entity<BookAuthor>().HasKey(x => new { x.BookId, x.AuthorId });
         builder.Entity<FavoriteBook>().HasKey(x => new { x.BookId, x.UserId });
@@ -100,7 +98,7 @@ public class LibraryDbContext : IdentityDbContext<ApplicationUser>
         {
             opt.HasData(new List<Book>
                 {
-                    new Book { Id = 1, Available = true, Description = "«„Я похож на сумасшедшего?“ — спросил меня Илон Маск». О чем книга В книге «Илон Маск: Tesla, SpaceX и дорога в будущее» автор представляет независимый и разносторонний взгляд на жизнь и достижения самого яркого предпринимателя Кремниевой долины.", Language = "Русский", Percent = 0, Price = 124, Title = "Вэнс Эшли: Илон Маск. Tesla, SpaceX и дорога в будущее", AvailableCount = 100, HasPdf = false, ImagePath = "/img/ilon.jpg", PagesNumber = 390, PdfPath = null, ISBN = "148419606", PublishYear = 2019,  CategoryId= 1},
+                    new Book { Id = 1, Available = true, Description = "«„Я похож на сумасшедшего?“ — спросил меня Илон Маск». О чем книга В книге «Илон Маск: Tesla, SpaceX и дорога в будущее» автор представляет независимый и разносторонний взгляд на жизнь и достижения самого яркого предпринимателя Кремниевой долины.", Language = "Русский", Percent = 0, Price = 124, Title = "Вэнс Эшли: Илон Маск. Tesla, SpaceX", AvailableCount = 100, HasPdf = false, ImagePath = "/img/ilon.jpg", PagesNumber = 390, PdfPath = null, ISBN = "148419606", PublishYear = 2019,  CategoryId= 1},
                     new Book { Id = 2, Available = true, Description = "Книга, которая изменит вашу жизнь! Самое известное исследование о подсознании от известного писателя и тренера личностного роста Джона Кехо! В подсознании каждого человека скрываются огромные резервы. И когда логика оказывается бессильной, именно подсознание поможет вам решать самые сложные повседневные проблемы.", Language = "Русский", Percent = 0, Price = 68, Title = "Джон Кехо: Подсознание может все", AvailableCount = 100, HasPdf = false, ImagePath = "/img/podsoznanie.jpg", PagesNumber = 174, PdfPath = null, ISBN = "17574992", PublishYear = 2019, CategoryId = 2},
                     new Book { Id = 3, Available = true, Description = "Автор этой книги уверен: чтобы исполнить все свои замыслы и желания, Вы прежде всего должны добиться успеха в денежных вопросах, используя принципы управления личными финансами, изложенные на ее страницах.", Language = "Русский", Percent = 0, Price = 64, Title = "Джорж Клейсон: Самый богатый человек в Вавилоне", AvailableCount = 50, HasPdf = false, ImagePath = "/img/samiybogatiy.png", PagesNumber = 190, PdfPath = null, ISBN = "29968802", PublishYear = 2020, CategoryId = 3},
                     new Book { Id = 4, Available = true, Description = "В основу книги Уолтера Айзексона Стив Джобс легли беседы с самим Стивом Джобсом, а также с его родственниками, друзьями, врагами, соперниками и коллегами. Джобс никак не контролировал автора. Он откровенно отвечал на все вопросы и ждал такой же честности от остальных.", Language = "Русский", Percent = 0, Price = 146, Title = "Айзексон Уолтер: Стив Джобс. Биография", AvailableCount = 606, HasPdf = false, ImagePath = "/img/stivjobs.jpg", PagesNumber = 100, PdfPath = null, ISBN = "240540450", PublishYear = 2017, CategoryId = 1},

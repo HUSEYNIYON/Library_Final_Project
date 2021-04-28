@@ -9,27 +9,27 @@ namespace Library_Final_Project.Seeds
     {
         public static async Task AddDefaultUsersAsync(UserManager<ApplicationUser> userManager)
         {
-            var admin = await userManager.FindByNameAsync("Admin");
+            var admin = await userManager.FindByNameAsync("admin");
             if (admin == null)
             {
                 admin = new ApplicationUser
                 {
-                    Email = "Admin@mail.ru",
-                    UserName = "Admin"
+                    Email = "admin@gmail.com",
+                    UserName = "admin"
                 };
-                await userManager.CreateAsync(admin, "@dmin123");
+                await userManager.CreateAsync(admin, "admin99");
                 await userManager.AddToRoleAsync(admin, nameof(Roles.Admin));
             }
 
-            var user = await userManager.FindByNameAsync("User");
+            var user = await userManager.FindByNameAsync("user");
             if(user == null)
             {
                 user = new ApplicationUser
                 {
-                    Email = "User@mail.ru",
-                    UserName = "User"
+                    Email = "user@gmail.com",
+                    UserName = "user"
                 };
-                await userManager.CreateAsync(user, "@user123");
+                await userManager.CreateAsync(user, "user99");
                 await userManager.AddToRoleAsync(admin, nameof(Roles.User));
             }
         }

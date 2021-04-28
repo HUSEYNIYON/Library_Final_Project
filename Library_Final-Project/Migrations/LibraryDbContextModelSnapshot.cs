@@ -196,7 +196,7 @@ namespace Library_Final_Project.Migrations
                             Percent = 0.0,
                             Price = 124.0,
                             PublishYear = 2019,
-                            Title = "Вэнс Эшли: Илон Маск. Tesla, SpaceX и дорога в будущее"
+                            Title = "Вэнс Эшли: Илон Маск. Tesla, SpaceX"
                         },
                         new
                         {
@@ -426,41 +426,20 @@ namespace Library_Final_Project.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Library_Final_Project.Entities.Cart", b =>
+            modelBuilder.Entity("Library_Final_Project.Entities.CartBook", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.HasKey("BookId", "UserId");
 
                     b.HasIndex("UserId");
-
-                    b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("Library_Final_Project.Entities.CartBook", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("CartId");
 
                     b.ToTable("CartBooks");
                 });
@@ -963,15 +942,6 @@ namespace Library_Final_Project.Migrations
                     b.Navigation("PaymentType");
                 });
 
-            modelBuilder.Entity("Library_Final_Project.Entities.Cart", b =>
-                {
-                    b.HasOne("Library_Final_Project.Entities.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Library_Final_Project.Entities.CartBook", b =>
                 {
                     b.HasOne("Library_Final_Project.Entities.Book", "Book")
@@ -980,15 +950,15 @@ namespace Library_Final_Project.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Library_Final_Project.Entities.Cart", "Cart")
-                        .WithMany("CartBooks")
-                        .HasForeignKey("CartId")
+                    b.HasOne("Library_Final_Project.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Book");
 
-                    b.Navigation("Cart");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Library_Final_Project.Entities.Category", b =>
@@ -1179,11 +1149,6 @@ namespace Library_Final_Project.Migrations
                     b.Navigation("FavoriteBooks");
 
                     b.Navigation("OrderBooks");
-                });
-
-            modelBuilder.Entity("Library_Final_Project.Entities.Cart", b =>
-                {
-                    b.Navigation("CartBooks");
                 });
 
             modelBuilder.Entity("Library_Final_Project.Entities.Category", b =>

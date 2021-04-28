@@ -1,4 +1,5 @@
-﻿using Library_Final_Project.DTOs.Book;
+﻿using Library_Final_Project.Common.Pagination;
+using Library_Final_Project.DTOs.Book;
 using Library_Final_Project.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,6 +21,7 @@ namespace Library_Final_Project.Services.Book
         {
             return await _context.Books.Select(x => new BookViewModel
             {
+                Id = x.Id,
                 Title = x.Title,
                 ImagePath = x.ImagePath,
                 Description = x.Description,
@@ -67,6 +69,22 @@ namespace Library_Final_Project.Services.Book
             await _context.BookDeliveryTypes.AddRangeAsync(bookDeliveryTypes);
             await _context.BookAuthors.AddRangeAsync(bookAuthors);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<PaginatedList<BookViewModel>> GetPagedBookAsync(int pageIndex, int pageSize)
+        {
+            var booksCount = await _context.Books.CountAsync();
+            var items = await _context.Books.Skip((pageIndex - 1) * pageSize).Take(pageSize).Include(x => x.BookAuthors).ThenInclude(x => x.Author).Select(x => new BookViewModel
+            {
+                Id = x.Id,
+                Description = x.Description,
+                Percent = x.Percent,
+                Price = x.Price,
+                Title = x.Title,
+                ImagePath = x.ImagePath,
+                Author = x.BookAuthors.FirstOrDefault().Author.Name
+            }).ToListAsync();
+            return new PaginatedList<BookViewModel>(items, booksCount, pageIndex, pageSize);
         }
 
         public async Task<UpdateBookViewModel> GetByIdAsync (int id)
@@ -180,6 +198,12 @@ namespace Library_Final_Project.Services.Book
             {
                 return;
             }
+            var authors = await _context.BookAuthors.Where(x => x.BookId == book.Id).ToListAsync();
+            var bookDeliveryTypes = await _context.BookDeliveryTypes.Where(x => x.BookId == book.Id).ToListAsync();
+            var bookPaymentTypes = await _context.BookPaymentTypes.Where(x => x.BookId == book.Id).ToListAsync();
+            _context.BookDeliveryTypes.RemoveRange(bookDeliveryTypes);
+            _context.BookPaymentTypes.RemoveRange(bookPaymentTypes);
+            _context.BookAuthors.RemoveRange(authors);
             _context.Books.Remove(book);
             await _context.SaveChangesAsync();
         }

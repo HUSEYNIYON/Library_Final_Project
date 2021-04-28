@@ -1,8 +1,8 @@
 ﻿@model List<Library_Final_Project.DTOs.Book.BookViewModel>
 @{
-    Layout = "_Layout";
+    Layout = "_AdminLayout";
 }
-<div class="container-fluid">
+@*<div class="container-fluid">
     <div class="row">
             @foreach (var book in Model)
             {
@@ -28,35 +28,102 @@
                 </div>
             }
     </div>
-</div>
-
-@*<div class="main-getbook" style="background-color: #fff">
-    <h1 style="text-align:center; padding: 40px">List of Boooooks</h1>
-    <div class="row">
+</div>*@
+<div class="row ">
         @foreach (var book in Model)
         {
-            <div class="booking-card" style="background-image: url(@book.ImagePath);  background-size: auto; background-repeat: no-repeat">
-                <div class="book-container">
-                    <div class="content">
-                        <button class="btn">в корзину</button>
+    <div class="col-md-2 m-4 adminGetAll">
+            <div class="col-md-3">
+                <div class="card mt-3" style="width: 250px;">
+                    <div class="image position-relative px-2 px-md-3 pt-2 pb-2">
+                        <a href="#">
+                            <img src="@book.ImagePath" alt="image" width="300" height="300" class="img-fluid mx-auto d-block">
+                        </a>
                     </div>
-                </div>
-                <div class="informations-container">
-                    <h2 class="title">@book.Title</h2>
-                    <p class="sub-title">@book.Title</p>
-                    <p class="price">
-                        <svg class="icon" style="width:24px;height:24px" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M3,6H21V18H3V6M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M7,8A2,2 0 0,1 5,10V14A2,2 0 0,1 7,16H17A2,2 0 0,1 19,14V10A2,2 0 0,1 17,8H7Z" />
-                        </svg>@book.Price
-                    </p>
-                    <div class="more-information">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                        </svg>
-                        <p class="disclaimer">@book.Description</p>
+                    <div class="card-body px-2 px-md-3 pt-2 pb-0">
+                        <div class="caption">
+                            <h6 class="card-title mb-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="#65bc54" width="12" height="12" viewBox="0 0 24 24" class="inline-svg">
+                                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.25 17.292l-4.5-4.364 1.857-1.858 2.643 2.506 5.643-5.784 1.857 1.857-7.5 7.643z"></path>
+                                </svg>
+                                @*<a href="#">@book.Title</a>*@
+                                @Html.ActionLink(book.Title, "Update", "Book", new { id = book.Id })
+                            </h6>
+                            <small class="card-author text-muted mb-1 d-block">@book.Author</small>
+                        </div>
+                    </div>
+                    <div class="card-footer px-2 px-md-3 pb-2 pb-md-3 pt-0 bg-white border-0">
+                        <div class="price">
+                            <div class="h6 mb-1">@book.Price сомони</div>
+                        </div>
+                        <div class="rating mt-2">
+                            <div class="d-inline-block mr-1">
+                                <span class="si si-rem si-rem-star">
+                                    <svg fill="#ddd" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                                    </svg>
+                                </span>
+                                <span class="si si-rem si-rem-star">
+                                    <svg fill="#ddd" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                                    </svg>
+                                </span>
+                                <span class="si si-rem si-rem-star">
+                                    <svg fill="#ddd" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                                    </svg>
+                                </span>
+                                <span class="si si-rem si-rem-star">
+                                    <svg fill="#ddd" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                                    </svg>
+                                </span>
+                                <span class="si si-rem si-rem-star">
+                                    <svg fill="#ddd" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                            <small class="d-inline-block">
+                                <span class="text-muted">Нет отзывов</span>
+                            </small>
+                        </div>
+                       <div class="mt-2">
+                            @Html.ActionLink("Удалить", "Delete", "Book", new { id = book.Id }, new { @class = "btn btn-danger" })
+                       </div>
                     </div>
                 </div>
             </div>
+    </div>
         }
     </div>
-</div>*@
+    @*<div class="main-getbook" style="background-color: #fff">
+            <h1 style="text-align:center; padding: 40px">List of Boooooks</h1>
+            <div class="row">
+                @foreach (var book in Model)
+                {
+                    <div class="booking-card" style="background-image: url(@book.ImagePath);  background-size: auto; background-repeat: no-repeat">
+                        <div class="book-container">
+                            <div class="content">
+                                <button class="btn">в корзину</button>
+                            </div>
+                        </div>
+                        <div class="informations-container">
+                            <h2 class="title">@book.Title</h2>
+                            <p class="sub-title">@book.Title</p>
+                            <p class="price">
+                                <svg class="icon" style="width:24px;height:24px" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M3,6H21V18H3V6M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M7,8A2,2 0 0,1 5,10V14A2,2 0 0,1 7,16H17A2,2 0 0,1 19,14V10A2,2 0 0,1 17,8H7Z" />
+                                </svg>@book.Price
+                            </p>
+                            <div class="more-information">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                                </svg>
+                                <p class="disclaimer">@book.Description</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>*@
