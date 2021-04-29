@@ -1,7 +1,9 @@
-﻿using Library_Final_Project.Common.Pagination;
+﻿using Library_Final_Project.Common;
+using Library_Final_Project.Common.Pagination;
 using Library_Final_Project.DTOs.Book;
 using Library_Final_Project.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -206,6 +208,41 @@ namespace Library_Final_Project.Services.Book
             _context.BookAuthors.RemoveRange(authors);
             _context.Books.Remove(book);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<Response> AddToCartAsync(int bookId, string userId)
+        {
+            var cartBook = await _context.CartBooks.FirstOrDefaultAsync(x => x.BookId == bookId && x.UserId == userId);
+            if(cartBook != null)
+            {
+                cartBook.Count++;
+            }
+            else
+            {
+                cartBook = new CartBook
+                {
+                    Count = 1,
+                    BookId = bookId,
+                    UserId = userId
+                };
+                await _context.CartBooks.AddAsync(cartBook);
+            }
+            var result = await _context.SaveChangesAsync();
+            return new Response { Succeeded = result > 0, Message = result > 0 ? null : "Ошибка при добавлении" };
+        }
+        public async Task<Response> DeleteFromCartAsync(int bookId, string userId)
+        {
+            var cartBook = await _context.CartBooks.FirstOrDefaultAsync(x => x.BookId == bookId && x.UserId == userId);
+            if(cartBook.Count > 1)
+            {
+                cartBook.Count--;
+            }
+            else
+            {
+                _context.CartBooks.Remove(cartBook);
+            }
+            var result = await _context.SaveChangesAsync();
+            return new Response { Succeeded = result > 0, Message = result > 0 ? null : "Ошибка при добавлении" };
         }
     }
 }

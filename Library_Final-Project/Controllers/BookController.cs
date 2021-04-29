@@ -3,8 +3,10 @@ using Library_Final_Project.DTOs.Book;
 using Library_Final_Project.Services;
 using Library_Final_Project.Services.Author;
 using Library_Final_Project.Services.Book;
+using Library_Final_Project.Services.Cart;
 using Library_Final_Project.Services.DeliveryType;
 using Library_Final_Project.Services.PaymentType;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -19,6 +21,8 @@ namespace Library_Final_Project.Controllers
         private readonly DeliveryTypeService _deliveryTypeService;
         private readonly PaymentTypeService _paymentTypeService;
         private readonly LibraryDbContext _context;
+        private readonly CartBookService _cartBookService;
+        private readonly UserService _userService;
 
         public BookController(BookService bookService,
                               FileService fileService,
@@ -26,7 +30,9 @@ namespace Library_Final_Project.Controllers
                               CategoryService categoryService,
                               DeliveryTypeService deliveryTypeService,
                               PaymentTypeService paymentTypeService,
-                              LibraryDbContext context)
+                              LibraryDbContext context,
+                              CartBookService cartBookService,
+                              UserService userService)
         {
             _bookService = bookService;
             _fileService = fileService;
@@ -35,6 +41,8 @@ namespace Library_Final_Project.Controllers
             _deliveryTypeService = deliveryTypeService;
             _paymentTypeService = paymentTypeService;
             _context = context;
+            _cartBookService = cartBookService;
+            _userService = userService;
         }
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
@@ -117,5 +125,13 @@ namespace Library_Final_Project.Controllers
             await _bookService.Delete(id);
             return RedirectToAction("GetBooks");
         }
+
+    //    [Authorize]
+    //    [HttpPost]
+    //    public async Task<JsonResult> AddToCart(int bookId)
+    //    {
+    //        var currentUser = await _userService.GetUserAsync(User);
+    //        var result = await _bookService
+    //    }
     }
 }

@@ -5,7 +5,9 @@
     margin: 0;
     box-sizing: border-box;
 }
-
+.required{
+    color: red;
+}
 .container {
     font-family: 'Poppins', sans-serif;
 }

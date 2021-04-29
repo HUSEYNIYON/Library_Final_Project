@@ -2,15 +2,16 @@
 
 @{
     ViewData["Title"] = "GetCategories";
+    Layout = "_AdminLayout";
 }
 
-<h1>GetCategories</h1>
+<h3 class="mt-4 mb-3">Список категории</h3>
 
-<table class="table bg-light">
+<table class="table bg-light table-striped">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Название
             </th>
             <th></th>
         </tr>
@@ -22,9 +23,8 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
             </td>
         </tr>
 }

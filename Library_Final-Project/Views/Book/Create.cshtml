@@ -5,48 +5,48 @@
 }
 <div class="container" style="background-color: #fff;">
         <div class="col-md-12">
-            <h2 class="text-center pt-5">Форма заполнение книг</h2>
+            <h2 class="text-center pt-5">Форма заполнение книги</h2>
             <form action="Create" method="post" enctype="multipart/form-data">
                 <div class="row mt-4">
                     <div class="col-md-6 offset-1">
-                        <label asp-for="Title" class="form-label bg-outline-success">Название книги</label>
+                        <label asp-for="Title" class="form-label bg-outline-success">Название книги <span class="required"><b>*</b></span></label>
                         <input type="text" asp-for="Title" class="form-control" placeholder="Название книги" />
                     </div>
                     <div class="col-md-4">
-                        <label asp-for="Price" class="form-label">Цена</label>
+                        <label asp-for="Price" class="form-label" >Цена <span class="required"><b>*</b></span></label>
                         <input type="number" asp-for="Price" class="form-control" placeholder="Цена" />
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-4 offset-1">
-                        <label asp-for="Title" class="form-label">Код книги</label>
+                        <label asp-for="Title" class="form-label">Код книги (ISBN) <span class="required"><b>*</b></span></label>
                         <input type="text" class="form-control" asp-for="ISBN" placeholder="ISBN" />
                     </div>
-                    <div class="col-md-2 pt-4">
+                    <div class="col-md-2 pt-4 form-check">
                         <input type="checkbox" asp-for="Available" />
                         <label class="form-check-label" for="flexCheckDefault">
                             Есть в наличие
                         </label>
                     </div>
                     <div class="col-md-4">
-                        <label asp-for="Price" class="form-label">Количество</label>
+                        <label asp-for="Price" class="form-label">Количество <span class="required"><b>*</b></span></label>
                         <input type="number" class="form-control" asp-for="AvailableCount" placeholder="Количество" />
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-10 offset-1">
-                        <label for="exampleFormControlTextarea1" class="form-label">Описание</label>
-                        <textarea asp-for="Description" class="form-control" cols="30" rows="5" placeholder="Описание"></textarea>
+                        <label for="exampleFormControlTextarea1" class="form-label">Описание <span class="required"><b>*</b></span></label>
+                        <textarea asp-for="Description" class="form-control" cols="30" rows="5" placeholder="Описание..."></textarea>
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-6 offset-1">
                         <label class="form-label">Выбрать картинку</label>
-                        <input type="file" class="form-file-input" asp-for="Image" />
+                        <input type="file"  class="form-control pb-5" asp-for="Image" />
                     </div>
-                    <div class="col-md-5">
-                        <label class="form-label">Категория</label>
-                        <select class="form-select" asp-for="CategoryId">
+                    <div class="col-md-4 mt-1">
+                        <label class="form-label">Категория <span class="required"><b>*</b></span></label>
+                        <select class="form-control form-control-lg" asp-for="CategoryId">
                             @foreach (var category in Model.Categories)
                             {
                                 <option value="@category.Key">@category.Value</option>
@@ -57,13 +57,22 @@
                 <div class="row mt-4">
                     <div class="col-md-6 offset-1">
                         <label class="form-label">Электронная версия</label>
-                        <input type="file" asp-for="PdfFile" />
+                        <input type="file" class="form-control pb-5" asp-for="PdfFile" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Тип оплаты <span class="required"><b>*</b></span></label>
+                        <select multiple class="form-control" asp-for="PaymentTypesId">
+                            @foreach (var paymentType in Model.PaymentTypes)
+                            {
+                                <option value="@paymentType.Key">@paymentType.Value</option>
+                            }
+                        </select>
                     </div>
                 </div>
                 <div class="row mt-4">
-                    <div class="col-md-2 offset-1">
-                        <label class="form-label">Вид доставки</label>
-                        <select multiple class="form-select" asp-for="DeliveryTypesId">
+                    <div class="col-md-2 offset-1 mb-5">
+                        <label class="form-label">Вид доставки <span class="required"><b>*</b></span></label>
+                        <select multiple class="form-control" asp-for="DeliveryTypesId">
                             @foreach (var deliveryType in Model.DeliveryTypes)
                             {
                                 <option value="@deliveryType.Key">@deliveryType.Value</option>
@@ -71,32 +80,27 @@
                             }
                         </select>
                     </div>
-                    <div class="col-md-3 offset-2">
-                        <label class="form-label">Тип оплаты</label>
-                        <select multiple class="form-select" asp-for="PaymentTypesId">
-                            @foreach (var paymentType in Model.PaymentTypes)
-                            {
-                                <option value="@paymentType.Key">@paymentType.Value</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="col-md-2 offset-1">
-                        <label class="form-label">Авторы</label>
-                        <select multiple class="form-select" asp-for="AuthorsId">
+                    <div class="col-md-3 ">
+                        <label class="form-label">Авторы <span class="required"><b>*</b></span></label>
+                        <select multiple class="form-control" asp-for="AuthorsId">
                             @foreach (var author in Model.Authors)
                             {
                                 <option value="@author.Key">@author.Value</option>
                             }
                         </select>
                     </div>
-                </div>
-                <div class="row mt-5">
-                    <div class="col-md-3 offset-5 mb-4" >
+                    <div class="col-md-2 pl-lg-5 offset-1 mt-lg-5">
                         <div class="input-group mb-3">
-                            <input type="submit" class="btn btn-block btn-primary" value="Создать" />
+                            <a asp-action="GetBooks" asp-controller="Book" class="btn btn-block btn-danger">Отмена</a>
                         </div>
                     </div>
-                </div>
-            </form>
+                    <div class="col-md-2 mt-4 mt-lg-5">
+                        <div class="input-group mb-3">
+                            <input type="submit" class="btn btn-block  btn-primary" value="Создать" />
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    </div>
+</form>
         </div>
     </div>

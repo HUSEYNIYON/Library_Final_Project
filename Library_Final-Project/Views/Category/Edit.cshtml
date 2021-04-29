@@ -2,27 +2,53 @@
 
 @{
     ViewBag.Title = "title";
-    Layout = "_Layout";
+    Layout = "_AdminLayout";
 }
+<h3 class="mt-5 mb-3 pl-lg-5">Изменить категорию</h3>
+
 <div asp-validation-summary="All"></div>
 <form action="Edit" method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="Id">
-    <input type="text" asp-for="Name" placeholder="Name">
-    <input type="file" asp-for="File">
-    <img src="@Model.IconPath" alt="">
-    <select asp-for="ParentCategoryId">
-        <option value="">Ничего</option>
-        @foreach (var item in Model.Categories)
-        {
-            if (item.Key == Model.ParentCategoryId)
-            {
-                <option selected value="@item.Key">@item.Value</option>
-            }
-            else
-            {
-                <option value="@item.Key">@item.Value</option>
-            }
-        }
-    </select>
-    <input type="submit" value="Создать">
+    <div class="row mt-4">
+        <div class="col-md-5 offset-1">
+            <label asp-for="Name" class="form-label bg-outline-success">Название Категорие</label>
+            <input type="text" class="form-control" asp-for="Name" placeholder="Введите названию">
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-5 offset-1">
+            <label asp-for="Name" class="form-label bg-outline-success">Выбирите файл</label>
+            <input type="file" class="form-control" asp-for="File">
+            <img src="@Model.IconPath" alt="">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 offset-1">
+            <label asp-for="Name" class="form-label bg-outline-success">Категория</label>
+            <select class="form-control" asp-for="ParentCategoryId">
+                <option value="">Ничего</option>
+                @foreach (var item in Model.Categories)
+                {
+                    if (item.Key == Model.ParentCategoryId)
+                    {
+                        <option selected value="@item.Key">@item.Value</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Key">@item.Value</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-2 offset-1">
+            <div class="input-group mb-3">
+                <a asp-action="GetCategories" asp-controller="Category" class="btn btn-block btn-danger">Отмена</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <input class="btn btn-block btn-primary" type="submit" value="Создать">
+        </div>
+    </div>
 </form>

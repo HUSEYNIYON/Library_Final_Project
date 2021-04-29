@@ -2,6 +2,7 @@
 using Library_Final_Project.DTOs.User;
 using Library_Final_Project.Entities;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Library_Final_Project.Services
@@ -15,6 +16,10 @@ namespace Library_Final_Project.Services
         {
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+        public async Task<ApplicationUser> GetUserAsync(ClaimsPrincipal claimsPrincipal)
+        {
+            return await _userManager.GetUserAsync(claimsPrincipal);
         }
 
         public async Task<SignInResult> SignInAsync(SignInViewModel viewModel)
