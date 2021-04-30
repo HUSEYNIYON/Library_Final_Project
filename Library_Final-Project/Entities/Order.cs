@@ -12,7 +12,10 @@ namespace Library_Final_Project.Entities
         public int DeliveryTypeId { get; set; }
         public int PaymentTypeId { get; set; }
         public int OrderStateId { get; set; }
+        public string Address { get; set; }
         public virtual ApplicationUser User { get; set; }
+        public virtual DeliveryType DeliveryType { get; set; }
+        public virtual PaymentType PaymentType { get; set; }
         public virtual OrderState OrderState { get; set; }
         public virtual ICollection<OrderBook> OrderBooks { get; set; } 
     }

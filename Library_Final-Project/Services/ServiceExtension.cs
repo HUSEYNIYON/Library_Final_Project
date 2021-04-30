@@ -20,6 +20,7 @@ namespace Library_Final_Project.Services
             services.AddTransient<PaymentTypeService>();
             services.AddTransient<DeliveryTypeService>();
             services.AddTransient<CartBookService>();
+            services.AddTransient<OrderService>();
         }
     }
 }

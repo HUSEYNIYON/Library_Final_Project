@@ -332,100 +332,6 @@ namespace Library_Final_Project.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Library_Final_Project.Entities.BookDeliveryType", b =>
-                {
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DeliveryTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BookId", "DeliveryTypeId");
-
-                    b.HasIndex("DeliveryTypeId");
-
-                    b.ToTable("BookDeliveryTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            BookId = 1,
-                            DeliveryTypeId = 1
-                        },
-                        new
-                        {
-                            BookId = 2,
-                            DeliveryTypeId = 1
-                        },
-                        new
-                        {
-                            BookId = 3,
-                            DeliveryTypeId = 1
-                        },
-                        new
-                        {
-                            BookId = 4,
-                            DeliveryTypeId = 1
-                        },
-                        new
-                        {
-                            BookId = 5,
-                            DeliveryTypeId = 1
-                        },
-                        new
-                        {
-                            BookId = 6,
-                            DeliveryTypeId = 1
-                        });
-                });
-
-            modelBuilder.Entity("Library_Final_Project.Entities.BookPaymentType", b =>
-                {
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PaymentTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BookId", "PaymentTypeId");
-
-                    b.HasIndex("PaymentTypeId");
-
-                    b.ToTable("BookPaymentTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            BookId = 1,
-                            PaymentTypeId = 1
-                        },
-                        new
-                        {
-                            BookId = 2,
-                            PaymentTypeId = 1
-                        },
-                        new
-                        {
-                            BookId = 3,
-                            PaymentTypeId = 1
-                        },
-                        new
-                        {
-                            BookId = 4,
-                            PaymentTypeId = 1
-                        },
-                        new
-                        {
-                            BookId = 5,
-                            PaymentTypeId = 1
-                        },
-                        new
-                        {
-                            BookId = 6,
-                            PaymentTypeId = 1
-                        });
-                });
-
             modelBuilder.Entity("Library_Final_Project.Entities.CartBook", b =>
                 {
                     b.Property<int>("BookId")
@@ -551,6 +457,9 @@ namespace Library_Final_Project.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
@@ -571,7 +480,11 @@ namespace Library_Final_Project.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DeliveryTypeId");
+
                     b.HasIndex("OrderStateId");
+
+                    b.HasIndex("PaymentTypeId");
 
                     b.HasIndex("UserId");
 
@@ -904,44 +817,6 @@ namespace Library_Final_Project.Migrations
                     b.Navigation("Book");
                 });
 
-            modelBuilder.Entity("Library_Final_Project.Entities.BookDeliveryType", b =>
-                {
-                    b.HasOne("Library_Final_Project.Entities.Book", "Book")
-                        .WithMany("BookDeliveryTypes")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Library_Final_Project.Entities.DeliveryType", "DeliveryType")
-                        .WithMany("BookDeliveryTypes")
-                        .HasForeignKey("DeliveryTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("DeliveryType");
-                });
-
-            modelBuilder.Entity("Library_Final_Project.Entities.BookPaymentType", b =>
-                {
-                    b.HasOne("Library_Final_Project.Entities.Book", "Book")
-                        .WithMany("BookPaymentTypes")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Library_Final_Project.Entities.PaymentType", "PaymentType")
-                        .WithMany("BookPaymentTypes")
-                        .HasForeignKey("PaymentTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("PaymentType");
-                });
-
             modelBuilder.Entity("Library_Final_Project.Entities.CartBook", b =>
                 {
                     b.HasOne("Library_Final_Project.Entities.Book", "Book")
@@ -995,9 +870,21 @@ namespace Library_Final_Project.Migrations
 
             modelBuilder.Entity("Library_Final_Project.Entities.Order", b =>
                 {
+                    b.HasOne("Library_Final_Project.Entities.DeliveryType", "DeliveryType")
+                        .WithMany("Orders")
+                        .HasForeignKey("DeliveryTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Library_Final_Project.Entities.OrderState", "OrderState")
                         .WithMany("Orders")
                         .HasForeignKey("OrderStateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Library_Final_Project.Entities.PaymentType", "PaymentType")
+                        .WithMany("Orders")
+                        .HasForeignKey("PaymentTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1005,7 +892,11 @@ namespace Library_Final_Project.Migrations
                         .WithMany()
                         .HasForeignKey("UserId");
 
+                    b.Navigation("DeliveryType");
+
                     b.Navigation("OrderState");
+
+                    b.Navigation("PaymentType");
 
                     b.Navigation("User");
                 });
@@ -1142,10 +1033,6 @@ namespace Library_Final_Project.Migrations
                 {
                     b.Navigation("BookAuthors");
 
-                    b.Navigation("BookDeliveryTypes");
-
-                    b.Navigation("BookPaymentTypes");
-
                     b.Navigation("FavoriteBooks");
 
                     b.Navigation("OrderBooks");
@@ -1160,7 +1047,7 @@ namespace Library_Final_Project.Migrations
 
             modelBuilder.Entity("Library_Final_Project.Entities.DeliveryType", b =>
                 {
-                    b.Navigation("BookDeliveryTypes");
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Library_Final_Project.Entities.Order", b =>
@@ -1175,7 +1062,7 @@ namespace Library_Final_Project.Migrations
 
             modelBuilder.Entity("Library_Final_Project.Entities.PaymentType", b =>
                 {
-                    b.Navigation("BookPaymentTypes");
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Library_Final_Project.Entities.ReviewState", b =>

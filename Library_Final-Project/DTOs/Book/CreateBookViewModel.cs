@@ -20,10 +20,6 @@ namespace Library_Final_Project.DTOs.Book
         public string ISBN { get; set; }
         public double Price { get; set; }
         public double Percent { get; set; }
-        public Dictionary<int,string> PaymentTypes { get; set; }
-        public List<int> PaymentTypesId { get; set; }
-        public Dictionary<int,string> DeliveryTypes { get; set; }
-        public List<int> DeliveryTypesId { get; set; }
         public Dictionary<int,string> Authors { get; set; }
         public List<int> AuthorsId { get; set; }
         public Dictionary<int,string> Categories { get; set; }

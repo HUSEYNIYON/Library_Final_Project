@@ -59,27 +59,10 @@
                         <label class="form-label">Электронная версия</label>
                         <input type="file" class="form-control pb-5" asp-for="PdfFile" />
                     </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Тип оплаты <span class="required"><b>*</b></span></label>
-                        <select multiple class="form-control" asp-for="PaymentTypesId">
-                            @foreach (var paymentType in Model.PaymentTypes)
-                            {
-                                <option value="@paymentType.Key">@paymentType.Value</option>
-                            }
-                        </select>
-                    </div>
+                    
                 </div>
                 <div class="row mt-4">
-                    <div class="col-md-2 offset-1 mb-5">
-                        <label class="form-label">Вид доставки <span class="required"><b>*</b></span></label>
-                        <select multiple class="form-control" asp-for="DeliveryTypesId">
-                            @foreach (var deliveryType in Model.DeliveryTypes)
-                            {
-                                <option value="@deliveryType.Key">@deliveryType.Value</option>
-
-                            }
-                        </select>
-                    </div>
+                    
                     <div class="col-md-3 ">
                         <label class="form-label">Авторы <span class="required"><b>*</b></span></label>
                         <select multiple class="form-control" asp-for="AuthorsId">

@@ -1,4 +1,5 @@
 ﻿using Library.Services;
+using Library_Final_Project.Common.Enum;
 using Library_Final_Project.DTOs.Book;
 using Library_Final_Project.Services;
 using Library_Final_Project.Services.Author;
@@ -49,20 +50,21 @@ namespace Library_Final_Project.Controllers
             var books = await _bookService.GetPagedBookAsync(pageNumber, 10);
             return View(books);
         }
+        [HttpGet]
+        [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> GetBooks()
         {
             var books = await _bookService.GetAll();
             return View(books);
         }
         [HttpGet]
+        [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> Create()
         {
             var bookViewModel = new CreateBookViewModel()
             {
                 Authors = await _authorService.GetAllInDictionaryAsync(),
-                Categories = await _categoryService.GetAllInDictionaryAsync(),
-                DeliveryTypes = await _deliveryTypeService.GetAllInDictionaryAsync(),
-                PaymentTypes = await _paymentTypeService.GetAllInDictionaryAsync()
+                Categories = await _categoryService.GetAllInDictionaryAsync()
             };
             return View(bookViewModel);
         }
@@ -83,13 +85,13 @@ namespace Library_Final_Project.Controllers
             await _bookService.CreateAsync(model, imagePath, pdfPath);
             return RedirectToAction("GetBooks");
         }
+        
         [HttpGet]
+        [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> Update(int id)
         {
             var book = await _bookService.GetByIdAsync(id);
             book.Authors = await _authorService.GetAllInDictionaryAsync();
-            book.PaymentTypes = await _paymentTypeService.GetAllInDictionaryAsync();
-            book.DeliveryTypes = await _deliveryTypeService.GetAllInDictionaryAsync();
             book.Categories = await _categoryService.GetAllInDictionaryAsync();
             return View(book);
         }
@@ -99,8 +101,6 @@ namespace Library_Final_Project.Controllers
             if(!ModelState.IsValid)
             {
                 model.Authors = await _authorService.GetAllInDictionaryAsync();
-                model.DeliveryTypes = await _deliveryTypeService.GetAllInDictionaryAsync();
-                model.PaymentTypes = await _paymentTypeService.GetAllInDictionaryAsync();
                 model.Categories = await _categoryService.GetAllInDictionaryAsync();
                 return View();
             }
@@ -119,19 +119,43 @@ namespace Library_Final_Project.Controllers
             await _bookService.UpdateAsync(model, imagePath, pdfPath);
             return RedirectToAction("GetBooks");
         }
-
+        [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> Delete(int id)
         {
             await _bookService.Delete(id);
             return RedirectToAction("GetBooks");
         }
 
-    //    [Authorize]
-    //    [HttpPost]
-    //    public async Task<JsonResult> AddToCart(int bookId)
-    //    {
-    //        var currentUser = await _userService.GetUserAsync(User);
-    //        var result = await _bookService
-    //    }
+        [Authorize]
+        public async Task<IActionResult> AddToCart(int bookId)
+        {
+            var currentUser = await _userService.GetUserAsync(User);
+            var result = await _bookService.AddToCartAsync(bookId, currentUser.Id);
+            return RedirectToAction("CartBooks");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> DeleteFromCart(int bookId)
+        {
+            var currentUser = await _userService.GetUserAsync(User);
+            var result = await _bookService.DeleteFromCartAsync(bookId, currentUser.Id);
+            return RedirectToAction("CartBooks");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> DeleteAllFromCart(int bookId)
+        {
+            var currentUser = await _userService.GetUserAsync(User);
+            var result = await _bookService.DeleteAllFromCartAsync(bookId, currentUser.Id);
+            return RedirectToAction("CartBooks");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> CartBooks()
+        {
+            var currentUser = await _userService.GetUserAsync(User);
+            var cartBooks = await _bookService.GetCartBooksAsync(currentUser.Id);
+            return View(cartBooks);
+        }
     }
 }

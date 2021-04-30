@@ -15,6 +15,8 @@ namespace Library_Final_Project.Controllers
         {
             _authorService = authorService;
         }
+        [HttpGet]
+        [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> GetAuthors()
         {
             var authors = await _authorService.GetAll();
@@ -41,6 +43,7 @@ namespace Library_Final_Project.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> Delete(int id)
         {
             await _authorService.Delete(id);

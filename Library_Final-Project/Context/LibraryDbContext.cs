@@ -14,8 +14,6 @@ public class LibraryDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Book> Books { get; set; }
     public DbSet<Author> Authors { get; set; }
     public DbSet<BookAuthor> BookAuthors { get; set; }
-    public DbSet<BookDeliveryType> BookDeliveryTypes { get; set; }
-    public DbSet<BookPaymentType> BookPaymentTypes { get; set; }
     public DbSet<CartBook> CartBooks { get; set; }
     public DbSet<DeliveryType> DeliveryTypes { get; set; }
     public DbSet<FavoriteBook> FavoriteBooks { get; set; }
@@ -32,8 +30,6 @@ public class LibraryDbContext : IdentityDbContext<ApplicationUser>
 
         builder.Entity<Category>().HasOne(x => x.ParentCategory).WithMany().HasForeignKey(x => x.ParentCategoryId);
         builder.Entity<CartBook>().HasKey(x => new { x.BookId, x.UserId });
-        builder.Entity<BookDeliveryType>().HasKey(x => new { x.BookId, x.DeliveryTypeId });
-        builder.Entity<BookPaymentType>().HasKey(x => new { x.BookId, x.PaymentTypeId });
         builder.Entity<BookAuthor>().HasKey(x => new { x.BookId, x.AuthorId });
         builder.Entity<FavoriteBook>().HasKey(x => new { x.BookId, x.UserId });
         builder.Entity<OrderBook>().HasKey(x => new { x.BookId, x.OrderId });
@@ -107,31 +103,7 @@ public class LibraryDbContext : IdentityDbContext<ApplicationUser>
                 });
         });
 
-        builder.Entity<BookDeliveryType>(opt =>
-        {
-            opt.HasData(new List<BookDeliveryType>
-                {
-                    new BookDeliveryType {BookId = 1, DeliveryTypeId = 1},
-                    new BookDeliveryType {BookId = 2, DeliveryTypeId = 1},
-                    new BookDeliveryType {BookId = 3, DeliveryTypeId = 1},
-                    new BookDeliveryType {BookId = 4, DeliveryTypeId = 1},
-                    new BookDeliveryType {BookId = 5, DeliveryTypeId = 1},
-                    new BookDeliveryType {BookId = 6, DeliveryTypeId = 1}
-                });
-        });
-
-        builder.Entity<BookPaymentType>(opt =>
-        {
-            opt.HasData(new List<BookPaymentType>
-                {
-                    new BookPaymentType {BookId = 1, PaymentTypeId = 1},
-                    new BookPaymentType {BookId = 2, PaymentTypeId = 1},
-                    new BookPaymentType {BookId = 3, PaymentTypeId = 1},
-                    new BookPaymentType {BookId = 4, PaymentTypeId = 1},
-                    new BookPaymentType {BookId = 5, PaymentTypeId = 1},
-                    new BookPaymentType {BookId = 6, PaymentTypeId = 1}
-                });
-        });
+        
         builder.Entity<BookAuthor>(opt =>
         {
             opt.HasData(new List<BookAuthor>

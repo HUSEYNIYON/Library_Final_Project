@@ -21,8 +21,6 @@ namespace Library_Final_Project.Entities
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
         public virtual ICollection<OrderBook> OrderBooks { get; set; } 
-        public virtual ICollection<BookDeliveryType> BookDeliveryTypes { get; set; }
-        public virtual ICollection<BookPaymentType> BookPaymentTypes { get; set; }
         public virtual ICollection<BookAuthor> BookAuthors { get; set; }
         public virtual ICollection<FavoriteBook> FavoriteBooks { get; set; }
     }

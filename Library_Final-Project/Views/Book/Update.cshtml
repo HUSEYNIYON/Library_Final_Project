@@ -73,38 +73,6 @@
             </div>
             <input type="hidden" asp-for="PrevImagePath">
             <div class="row mt-5">
-                <div class="col-md-2 offset-1">
-                    <label class="form-label">Вид доставки <span class="required"><b>*</b></span></label>
-                    <select multiple class="form-control" asp-for="DeliveryTypesId">
-                        @foreach (var deliveryType in Model.DeliveryTypes)
-                        {
-                            if (Model.DeliveryTypesId.Contains(deliveryType.Key))
-                            {
-                                <option selected value="@deliveryType.Key">@deliveryType.Value</option>
-                            }
-                            else
-                            {
-                                <option value="@deliveryType.Key">@deliveryType.Value</option>
-                            }
-                        }
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Тип оплати <span class="required"><b>*</b></span></label>
-                    <select multiple class="form-control" asp-for="PaymentTypesId">
-                        @foreach (var paymentType in Model.PaymentTypes)
-                        {
-                            if (Model.PaymentTypesId.Contains(paymentType.Key))
-                            {
-                                <option selected value="@paymentType.Key">@paymentType.Value</option>
-                            }
-                            else
-                            {
-                                <option value="@paymentType.Key">@paymentType.Value</option>
-                            }
-                        }
-                    </select>
-                </div>
                 <div class="col-md-3">
                     <label class="form-label">Авторы <span class="required"><b>*</b></span></label>
                     <select multiple class="form-control" asp-for="AuthorsId">

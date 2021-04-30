@@ -1,6 +1,8 @@
 ﻿using Library.Services;
+using Library_Final_Project.Common.Enum;
 using Library_Final_Project.DTOs.Category;
 using Library_Final_Project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -16,12 +18,15 @@ namespace Library_Final_Project.Controllers
             _categoryService = categoryService;
             _fileService = fileService;
         }
+        [HttpGet]
+        [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> GetCategories()
         {
             var categories = await _categoryService.GetAll();
             return View(categories);
         }
         [HttpGet]
+        [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> Create()
         {
             return View(new CreateCategoryViewModel
@@ -50,6 +55,8 @@ namespace Library_Final_Project.Controllers
 
             return RedirectToAction("GetCategories");
         }
+
+        [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> Edit(int id)
         {
             var category = await _categoryService.GetCategoryById(id);

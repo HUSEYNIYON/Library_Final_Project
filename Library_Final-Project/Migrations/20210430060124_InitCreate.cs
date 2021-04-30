@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Library_Final_Project.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -289,7 +289,8 @@ namespace Library_Final_Project.Migrations
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeliveryTypeId = table.Column<int>(type: "int", nullable: false),
                     PaymentTypeId = table.Column<int>(type: "int", nullable: false),
-                    OrderStateId = table.Column<int>(type: "int", nullable: false)
+                    OrderStateId = table.Column<int>(type: "int", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -301,9 +302,21 @@ namespace Library_Final_Project.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_Orders_DeliveryTypes_DeliveryTypeId",
+                        column: x => x.DeliveryTypeId,
+                        principalTable: "DeliveryTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Orders_OrderStates_OrderStateId",
                         column: x => x.OrderStateId,
                         principalTable: "OrderStates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_PaymentTypes_PaymentTypeId",
+                        column: x => x.PaymentTypeId,
+                        principalTable: "PaymentTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -328,54 +341,6 @@ namespace Library_Final_Project.Migrations
                         name: "FK_BookAuthors_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BookDeliveryTypes",
-                columns: table => new
-                {
-                    BookId = table.Column<int>(type: "int", nullable: false),
-                    DeliveryTypeId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BookDeliveryTypes", x => new { x.BookId, x.DeliveryTypeId });
-                    table.ForeignKey(
-                        name: "FK_BookDeliveryTypes_Books_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Books",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BookDeliveryTypes_DeliveryTypes_DeliveryTypeId",
-                        column: x => x.DeliveryTypeId,
-                        principalTable: "DeliveryTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BookPaymentTypes",
-                columns: table => new
-                {
-                    BookId = table.Column<int>(type: "int", nullable: false),
-                    PaymentTypeId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BookPaymentTypes", x => new { x.BookId, x.PaymentTypeId });
-                    table.ForeignKey(
-                        name: "FK_BookPaymentTypes_Books_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Books",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BookPaymentTypes_PaymentTypes_PaymentTypeId",
-                        column: x => x.PaymentTypeId,
-                        principalTable: "PaymentTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -591,24 +556,6 @@ namespace Library_Final_Project.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "BookDeliveryTypes",
-                columns: new[] { "BookId", "DeliveryTypeId" },
-                values: new object[,]
-                {
-                    { 1, 1 },
-                    { 4, 1 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "BookPaymentTypes",
-                columns: new[] { "BookId", "PaymentTypeId" },
-                values: new object[,]
-                {
-                    { 1, 1 },
-                    { 4, 1 }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Books",
                 columns: new[] { "Id", "Available", "AvailableCount", "CategoryId", "Description", "HasPdf", "ISBN", "ImagePath", "Language", "PagesNumber", "PdfPath", "Percent", "Price", "PublishYear", "Title" },
                 values: new object[,]
@@ -638,26 +585,6 @@ namespace Library_Final_Project.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "BookDeliveryTypes",
-                columns: new[] { "BookId", "DeliveryTypeId" },
-                values: new object[,]
-                {
-                    { 2, 1 },
-                    { 5, 1 },
-                    { 3, 1 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "BookPaymentTypes",
-                columns: new[] { "BookId", "PaymentTypeId" },
-                values: new object[,]
-                {
-                    { 2, 1 },
-                    { 5, 1 },
-                    { 3, 1 }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Books",
                 columns: new[] { "Id", "Available", "AvailableCount", "CategoryId", "Description", "HasPdf", "ISBN", "ImagePath", "Language", "PagesNumber", "PdfPath", "Percent", "Price", "PublishYear", "Title" },
                 values: new object[] { 6, true, 30, 4, "Эта книга - ваш личный тренер. Каждый день она будет поднимать боевой дух и заряжать на успех. Ее автор, знаменитая Джен Синсеро, призывает не сбавлять обороты на пути к успеху и ежедневно накачивать мышцы крутости в Духовном тренажерном зале. Успех - это способ существования, постоянной адаптации и роста.", false, "k5043", "/img/netupi.jpg", "Русский", 306, null, 0.0, 99.0, 2019, "Не тупи" });
@@ -666,16 +593,6 @@ namespace Library_Final_Project.Migrations
                 table: "BookAuthors",
                 columns: new[] { "AuthorId", "BookId" },
                 values: new object[] { 1, 6 });
-
-            migrationBuilder.InsertData(
-                table: "BookDeliveryTypes",
-                columns: new[] { "BookId", "DeliveryTypeId" },
-                values: new object[] { 6, 1 });
-
-            migrationBuilder.InsertData(
-                table: "BookPaymentTypes",
-                columns: new[] { "BookId", "PaymentTypeId" },
-                values: new object[] { 6, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -722,16 +639,6 @@ namespace Library_Final_Project.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookDeliveryTypes_DeliveryTypeId",
-                table: "BookDeliveryTypes",
-                column: "DeliveryTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BookPaymentTypes_PaymentTypeId",
-                table: "BookPaymentTypes",
-                column: "PaymentTypeId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Books_CategoryId",
                 table: "Books",
                 column: "CategoryId");
@@ -762,9 +669,19 @@ namespace Library_Final_Project.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_DeliveryTypeId",
+                table: "Orders",
+                column: "DeliveryTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_OrderStateId",
                 table: "Orders",
                 column: "OrderStateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_PaymentTypeId",
+                table: "Orders",
+                column: "PaymentTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserId",
@@ -813,12 +730,6 @@ namespace Library_Final_Project.Migrations
                 name: "BookAuthors");
 
             migrationBuilder.DropTable(
-                name: "BookDeliveryTypes");
-
-            migrationBuilder.DropTable(
-                name: "BookPaymentTypes");
-
-            migrationBuilder.DropTable(
                 name: "CartBooks");
 
             migrationBuilder.DropTable(
@@ -840,12 +751,6 @@ namespace Library_Final_Project.Migrations
                 name: "Authors");
 
             migrationBuilder.DropTable(
-                name: "DeliveryTypes");
-
-            migrationBuilder.DropTable(
-                name: "PaymentTypes");
-
-            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
@@ -858,7 +763,13 @@ namespace Library_Final_Project.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "DeliveryTypes");
+
+            migrationBuilder.DropTable(
                 name: "OrderStates");
+
+            migrationBuilder.DropTable(
+                name: "PaymentTypes");
 
             migrationBuilder.DropTable(
                 name: "Categories");

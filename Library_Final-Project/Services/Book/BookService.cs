@@ -52,23 +52,11 @@ namespace Library_Final_Project.Services.Book
             };
             await _context.Books.AddAsync(book);
             await _context.SaveChangesAsync();
-            var bookPaymentTypes = new List<BookPaymentType>();
-            foreach (var id in model.PaymentTypesId)
-            {
-                bookPaymentTypes.Add(new BookPaymentType { BookId = book.Id, PaymentTypeId = id });
-            }
-            var bookDeliveryTypes = new List<BookDeliveryType>();
-            foreach (var id in model.DeliveryTypesId)
-            {
-                bookDeliveryTypes.Add(new BookDeliveryType { BookId = book.Id, DeliveryTypeId = id });
-            }
             var bookAuthors = new List<BookAuthor>();
-            foreach (var id in model.PaymentTypesId)
+            foreach (var id in model.AuthorsId)
             {
                 bookAuthors.Add(new BookAuthor { BookId = book.Id, AuthorId = id });
             }
-            await _context.BookPaymentTypes.AddRangeAsync(bookPaymentTypes);
-            await _context.BookDeliveryTypes.AddRangeAsync(bookDeliveryTypes);
             await _context.BookAuthors.AddRangeAsync(bookAuthors);
             await _context.SaveChangesAsync();
         }
@@ -91,7 +79,7 @@ namespace Library_Final_Project.Services.Book
 
         public async Task<UpdateBookViewModel> GetByIdAsync (int id)
         {
-            return await _context.Books.Where(x => x.Id == id).Include(x => x.BookAuthors).ThenInclude(x => x.Author).Include(x => x.Category).Include(x => x.BookDeliveryTypes).Include(x => x.BookPaymentTypes).Select(x => new UpdateBookViewModel
+            return await _context.Books.Where(x => x.Id == id).Include(x => x.BookAuthors).ThenInclude(x => x.Author).Include(x => x.Category).Select(x => new UpdateBookViewModel
             {
                 AuthorsId = x.BookAuthors.Select(p => p.AuthorId).ToList(),
                 Available = x.Available,
@@ -107,8 +95,6 @@ namespace Library_Final_Project.Services.Book
                 PagesNumber = x.PagesNumber,
                 ISBN = x.ISBN,
                 PublishYear = x.PublishYear,
-                DeliveryTypesId = x.BookDeliveryTypes.Select(t => t.DeliveryTypeId).ToList(),
-                PaymentTypesId = x.BookPaymentTypes.Select(m => m.PaymentTypeId).ToList(),
                 PrevPdfPath = x.PdfPath
             }).FirstOrDefaultAsync();
         }
@@ -134,46 +120,6 @@ namespace Library_Final_Project.Services.Book
             book.ImagePath = imagePath;
             book.PagesNumber = model.PagesNumber;
             book.PublishYear = model.PublishYear;
-            var paymentTypeIds = await _context.BookPaymentTypes.Where(x => x.BookId == book.Id).Select(x => x.PaymentTypeId).ToListAsync();
-            var prevPaymentTypeIds = new List<int>();
-            var newBookPaymentTypes = new List<BookPaymentType>();
-            foreach (var id in paymentTypeIds)
-            {
-                if (!model.PaymentTypesId.Contains(id))
-                    prevPaymentTypeIds.Add(id);
-            }
-            foreach (var paymentTypeId in model.PaymentTypesId)
-            {
-                if(!paymentTypeIds.Contains(paymentTypeId))
-                {
-                    newBookPaymentTypes.Add(new BookPaymentType { BookId = book.Id, PaymentTypeId = paymentTypeId });
-                }
-            }
-            var prevBookPaymentTypes = await _context.BookPaymentTypes.Where(x => x.BookId == book.Id && prevPaymentTypeIds.Contains(x.PaymentTypeId)).ToListAsync();
-            _context.BookPaymentTypes.RemoveRange(prevBookPaymentTypes);
-            await _context.BookPaymentTypes.AddRangeAsync(newBookPaymentTypes);
-
-            var deliveryTypeIds = await _context.BookDeliveryTypes.Where(x => x.BookId == book.Id).Select(x => x.DeliveryTypeId).ToListAsync();
-            var prevDeliveryTypeIds = new List<int>();
-            var newBookDeliveryTypes = new List<BookDeliveryType>();
-            foreach (var id in deliveryTypeIds)
-            {
-                if (!model.DeliveryTypesId.Contains(id))
-                {
-                    prevDeliveryTypeIds.Add(id);
-                }
-            }
-            foreach (var deliveryTypeId in model.DeliveryTypesId)
-            {
-                if (!deliveryTypeIds.Contains(deliveryTypeId))
-                {
-                    newBookDeliveryTypes.Add(new BookDeliveryType { BookId = book.Id, DeliveryTypeId = deliveryTypeId });
-                }
-            }
-            var prevBookDeliveTypes = await _context.BookDeliveryTypes.Where(x => x.BookId == book.Id && prevPaymentTypeIds.Contains(x.DeliveryTypeId)).ToListAsync();
-            _context.BookDeliveryTypes.RemoveRange(prevBookDeliveTypes);
-            await _context.BookDeliveryTypes.AddRangeAsync(newBookDeliveryTypes);
-
             var authorsId = await _context.BookAuthors.Where(x => x.BookId == book.Id).Select(x => x.AuthorId).ToListAsync();
             var prevAuthorsId = new List<int>();
             var newBookAuthors = new List<BookAuthor>();
@@ -201,10 +147,6 @@ namespace Library_Final_Project.Services.Book
                 return;
             }
             var authors = await _context.BookAuthors.Where(x => x.BookId == book.Id).ToListAsync();
-            var bookDeliveryTypes = await _context.BookDeliveryTypes.Where(x => x.BookId == book.Id).ToListAsync();
-            var bookPaymentTypes = await _context.BookPaymentTypes.Where(x => x.BookId == book.Id).ToListAsync();
-            _context.BookDeliveryTypes.RemoveRange(bookDeliveryTypes);
-            _context.BookPaymentTypes.RemoveRange(bookPaymentTypes);
             _context.BookAuthors.RemoveRange(authors);
             _context.Books.Remove(book);
             await _context.SaveChangesAsync();
@@ -244,5 +186,24 @@ namespace Library_Final_Project.Services.Book
             var result = await _context.SaveChangesAsync();
             return new Response { Succeeded = result > 0, Message = result > 0 ? null : "Ошибка при добавлении" };
         }
+        public async Task<List<CartBookViewModel>> GetCartBooksAsync(string currentUserId)
+        {
+            return await _context.CartBooks.Include(x => x.Book).Select(x => new CartBookViewModel
+            {
+                Count = x.Count,
+                Name = x.Book.Title,
+                Price = x.Book.Price,
+                BookId = x.BookId,
+                ImagePath = x.Book.ImagePath
+            }).ToListAsync();
+        }
+        public async Task<Response> DeleteAllFromCartAsync(int bookId, string currentUserId)
+        {
+            var cartBook = await _context.CartBooks.FirstOrDefaultAsync(x => x.BookId == bookId && x.UserId == currentUserId);
+            _context.CartBooks.Remove(cartBook);
+            var result = await _context.SaveChangesAsync();
+            return new Response { Succeeded = result > 0, Message = result > 0 ? null : "Ошибка при удалении" };
+        }
+
     }
 }
