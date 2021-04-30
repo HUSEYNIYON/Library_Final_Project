@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-md-6 offset-1 mb-4">
                     <label asp-for="Categories" class="form-label bg-outline-success"> Категории</label>
-                    <select class="form-select" asp-for="ParentCategoryId">
+                    <select class="form-control" asp-for="ParentCategoryId">
                         @foreach (var item in Model.Categories)
                         {
                             <option value="@item.Key">@item.Value</option>
@@ -25,7 +25,12 @@
                     <label asp-for="File" class="form-label bg-outline-success">Иконка  </label>
                     <input type="file" asp-for="File">
                 </div>
-                <div class="col-md-6 offset-1 mb-5">
+            </div>
+            <div class="row">
+                <div class="col-md-3 offset-1">
+                    <a asp-controller="Category" asp-action="getcategories" class="btn btn-block btn-danger">Отмена</a>
+                </div>
+                <div class="col-md-4">
                     <input type="submit" class="btn btn-primary btn-block" value="Создать">
                 </div>
             </div>

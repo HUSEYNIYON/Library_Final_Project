@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Library_Final_Project.DTOs.Category;
 using Library_Final_Project.Entities;
 
@@ -18,6 +15,11 @@ namespace Library.Services
         {
             _context = context;
         }
+
+        /// <summary>
+        /// GetAll
+        /// </summary>
+        /// <returns>List of categories</returns>
         public async Task<List<CategoryViewModel>> GetAll()
         {
             return await _context.Categories.Select(x => new CategoryViewModel
@@ -28,6 +30,12 @@ namespace Library.Services
             }).ToListAsync();
         }
 
+        /// <summary>
+        /// CreateAsync
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="iconPath"></param>
+        /// <returns></returns>
         public async Task CreateAsync(CreateCategoryViewModel model, string iconPath)
         {
             var category = new Category
@@ -40,11 +48,22 @@ namespace Library.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// GetCategoryById
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Get category by id</returns>
         public async Task<Category> GetCategoryById(int id)
         {
             return await _context.Categories.FindAsync(id);
         }
 
+        /// <summary>
+        /// FindChildCategories
+        /// </summary>
+        /// <param name="categories"></param>
+        /// <param name="id"></param>
+        /// <param name="catIds"></param>
         public void FindChildCategories(List<Category> categories, int? id, ref List<int> catIds)
         {
             foreach (var category in categories)
@@ -58,6 +77,11 @@ namespace Library.Services
             }
         }
 
+        /// <summary>
+        /// FindChildId
+        /// </summary>
+        /// <param name="categories"></param>
+        /// <param name="catIds"></param>
         public void FindChildId(List<Category> categories, ref List<int> catIds)
         {
             foreach (var category in categories)
@@ -68,6 +92,11 @@ namespace Library.Services
             }
         }
 
+        /// <summary>
+        /// GetAllInDictionaryAsync
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>List of categories only by id and Name</returns>
         public async Task<Dictionary<int, string>> GetAllInDictionaryAsync(int? id = null)
         {
             var categories = await _context.Categories.ToListAsync();
@@ -85,6 +114,12 @@ namespace Library.Services
             return categories.ToDictionary(x => x.Id, x => x.Name);
         }
 
+        /// <summary>
+        /// EditAsync
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="filePath"></param>
+        /// <returns>True or false</returns>
         public async Task<bool> EditAsync(EditCategoryViewModel model, string filePath)
         {
             var category = await _context.Categories.FindAsync(model.Id);

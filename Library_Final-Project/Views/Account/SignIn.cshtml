@@ -4,35 +4,28 @@
 }
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <title>the book | Вход </title>
     <link rel="icon" type="image/x-icon" href="~/images/icons/logo.ico" />
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/css/main.css" rel="stylesheet" type="text/css">
     <link href="~/css/Account/form-2.css" rel="stylesheet" type="text/css" />
     <link href="~/css/Snackbar.css" rel="stylesheet" />
     <script src="~/js/jquery-3.1.1.min.js"></script>
-    <!-- END GLOBAL MANDATORY STYLES -->
 </head>
 
 <body class="form">
-
-
     <div class="form-container outer">
         <div class="form-form">
             <div class="form-form-wrap">
                 <div class="form-container">
                     <div class="form-content">
-
                         <h1 class="">Вход</h1>
                         <p class="">Войдите в свой аккаунт для продолжения.</p>
-
                         <form class="text-left">
                             <div class="form">
                                 <input type="hidden" asp-for="ReturnUrl" id="returnUrl">
@@ -44,10 +37,8 @@
                                         <circle cx="12" cy="12" r="4"></circle>
                                         <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
                                     </svg>
-                                    <input id="login" name="text" type="text" value="" class="form-control"
-                                           placeholder="Login">
+                                    <input id="login" name="text" type="text" value="" class="form-control" placeholder="Login">
                                 </div>
-
                                 <div id="password-field" class="field-wrapper input mb-2">
                                     <div class="d-flex justify-content-between">
                                         <label for="password">Пароль</label>
@@ -72,14 +63,12 @@
                                         <button type="button" class="btn btn-primary" onclick="signIn()">Вход</button>
                                     </div>
                                 </div>
-
                                 <p class="signup-link">
                                     Не зарегистрирован? <a asp-action="SignUp" asp-controller="Account">
                                         Создай
                                         новый аккаунт
                                     </a>
                                 </p>
-
                             </div>
                         </form>
 
@@ -88,19 +77,13 @@
             </div>
         </div>
     </div>
-
-
-    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="~/js/popper.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
     <script src="~/js/Snackbar.js"></script>
-
-    <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script>
         var togglePassword = document.getElementById("toggle-password");
         var formContent = document.getElementsByClassName('form-content')[0];
         var getFormContentHeight = formContent.clientHeight;
-
         var formImage = document.getElementsByClassName('form-image')[0];
         if (formImage) {
             var setFormImageHeight = formImage.style.height = getFormContentHeight + 'px';
@@ -115,7 +98,6 @@
                 }
             });
         }
-
         function signIn() {
             let login = document.getElementById("login").value;
             let pass = document.getElementById("password").value;
@@ -149,7 +131,5 @@
             });
         }
     </script>
-
 </body>
-
 </html>

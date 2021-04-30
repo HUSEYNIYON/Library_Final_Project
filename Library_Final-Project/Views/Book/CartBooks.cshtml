@@ -1,8 +1,8 @@
 ﻿@model List<Library_Final_Project.DTOs.Book.CartBookViewModel>
-
 @{ 
     Layout = null;
 }
+<link href="~/css/bootstrap.min.css" rel="stylesheet" />
 <style>
     @@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500);
 
@@ -18,17 +18,19 @@
         margin: 0;
         background-color: hsl(53, 100%, 50%);
         font-family: 'Roboto', sans-serif;
+
     }
 
     .shopping-cart {
         width: 750px;
-        height: 423px;
+        height: auto;
         margin: 80px auto;
         background: #FFFFFF;
         box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
         border-radius: 6px;
         display: flex;
         flex-direction: column;
+     
     }
 
     .title {
@@ -50,7 +52,6 @@
             border-top: 1px solid #E1E8EE;
             border-bottom: 1px solid #E1E8EE;
         }
-    /* Buttons -  Delete*/
     .buttons {
         position: relative;
         padding-top: 30px;
@@ -216,24 +217,23 @@
     </div>
     @foreach (var item in Model)
     {
-
         <div class="item" id="@item.BookId-req">
             <div class="buttons">
                 <span class="delete-btn"><a href="~/Book/DeleteAllFromCart?bookId=@item.BookId"><img src="~/img/delete-icn.svg"></a></span>
             </div>
             <div class="image">
-                <img src="@item.ImagePath" width="80" alt="image" />
+                <img src="@item.ImagePath" width="80" alt="" />
             </div>
             <div class="description">
                 <span>@item.Name</span>
             </div>
             <div class="quantity">
-                <a class="plus-btn" href="~/Book/AddToCart?bookId=@item.BookId" >
+                <a style="text-decoration: none;" class="plus-btn" href="~/Book/AddToCart?bookId=@item.BookId">
                     <img src="~/img/plus.svg" alt="plus" />
                 </a>
                 <input type="text" id="tot-count" name="name" disabled value="@item.Count">
-                <a class="minus-btn" href="~/Book/DeleteFromCart?bookId=@item.BookId" >
-                    <img src="~/img/minus.svg" alt="minus" />
+                <a class="minus-btn " href="~/Book/DeleteFromCart?bookId=@item.BookId">
+                    <img src="~/img/minus.svg" class="mt-lg-1" alt="minus" />
                 </a>
             </div>
             <div class="total-price" id="total-price"><b>@(item.Count * item.Price) TJS</b></div>
@@ -242,107 +242,27 @@
     @{
         double sum = Model.Select(x => new { x.Count, x.Price }).Sum(x => x.Count * x.Price);
     }
-    <input type="text" id="total" value="@sum">
-    <a href="~/Order/Create">Approve</a>
+
+<div class="card-footer">
+    <div class="row">
+        <div class="col-md-2 offset-6 mt-2">
+            <label class="text-muted"><b>Итого: </b></label>
+        </div>
+        <div class="col-md-2">
+            <input type="text" style="font-size: 18px" disabled class="form-control" id="total" value="@sum" />
+        </div>
+        <div class="col-md-2 mt-2">
+            <label class="text-muted"><b>TJS</b></label>
+        </div>
+
+    </div>
+    <div class="row mt-3 mb-3">
+        <div class="col-md-2 offset-6 mt-2">
+            <a class="btn btn-danger" href="~/Book/index">Отмена</a>
+        </div>
+        <div class="col-md-4 mt-2">
+            <a class="btn btn-primary" href="~/Order/Create">Оформить заказ</a>
+        </div>
+        </div>
+    </div>
 </div>
-
-<script type="text/javascript">
-    //let total = document.getElementById("total");
-    //let totPrice = document.getElementById("total-price");
-    //let bookPrice = document.getElementById("bookPrice");
-    //function deleteAllFromCart(el) {
-    //    var bookId = el.id.split('-')[0];
-    //    var item = document.getElementById(bookId + "-req");
-    //    var input = document.getElementById("tot-count");
-    //    var value = parseInt(input.value);
-    //    let total_price = parseFloat(document.getElementById("total-price").innerText.split(' ')[0]);
-    //    $.ajax({
-    //        cache: false,
-    //        method: "POST",
-    //        data: { "bookId": bookId },
-    //        url: "/Book/DeleteAllFromCart",
-    //        success: function (data) {
-    //            var data = JSON.parse(data);
-    //            if (data.Succeeded) {
-    //                total.value = parseFloat(total.value) - total_price;
-    //                item.remove();
-    //            }
-    //            else {
-    //                Snackbar.show({
-    //                    text: data.Message,
-    //                    pos: 'bottom-right',
-    //                    actionTextColor: '#fff',
-    //                    backgroundColor: '#e7515a'
-    //                });
-    //            }
-    //        }
-    //    });
-    //}
-
-
-    //function deleteFromCart(el) {
-    //    var bookId = el.id.split('-')[0];
-    //    var item = document.getElementById(bookId + "-req");
-    //    var input = document.getElementById("tot-count");
-    //    var value = parseInt(input.value);
-    //    let total_price = parseFloat(document.getElementById("total-price").innerText.split(' ')[0]);
-    //    let bookP = parseFloat(bookPrice.value);
-    //    $.ajax({
-    //        cache: false,
-    //        method: "POST",
-    //        data: { "bookId": bookId },
-    //        url: "/Book/DeleteFromCart",
-    //        success: function (data) {
-    //            var data = JSON.parse(data);
-    //            if (data.Succeeded) {
-    //                if (value > 1) {
-    //                    value = value - 1;
-    //                    input.value = value;
-    //                    totPrice.innerText = total_price - bookP + " TJS";
-    //                } else {
-    //                    item.remove();
-    //                }
-    //            }
-    //            else {
-    //                Snackbar.show({
-    //                    text: data.Message,
-    //                    pos: 'bottom-right',
-    //                    actionTextColor: '#fff',
-    //                    backgroundColor: '#e7515a'
-    //                });
-    //            }
-    //        }
-    //    });
-    //};
-    //function addToCart(el) {
-    //    var bookId = el.id.split('-')[0];
-    //    var input = document.getElementById("tot-count");
-    //    var value = parseInt(input.value);
-    //    let total_price = parseFloat(document.getElementById("total-price").innerText.split(' ')[0]);
-    //    let bookP = parseFloat(bookPrice.value);
-    //    $.ajax({
-    //        cache: false,
-    //        method: "POST",
-    //        data: { "bookId": bookId },
-    //        url: "/Book/AddToCart",
-    //        success: function (data) {
-    //            var data = JSON.parse(data);
-    //            if (data.Succeeded) {
-    //                input.value = ++value;
-    //                totPrice.innerText = total_price + bookP + " TJS";
-    //            }
-    //            else {
-    //                Snackbar.show({
-    //                    text: data.Message,
-    //                    pos: 'bottom-right',
-    //                    actionTextColor: '#fff',
-    //                    backgroundColor: '#e7515a'
-    //                });
-    //            }
-    //        }
-    //    });
-    //};
-    //$('.like-btn').on('click', function () {
-    //    $(this).toggleClass('is-active');
-    //});
-</script> 

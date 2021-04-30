@@ -73,7 +73,7 @@
             </div>
             <input type="hidden" asp-for="PrevImagePath">
             <div class="row mt-5">
-                <div class="col-md-3">
+                <div class="col-md-3 offset-1">
                     <label class="form-label">Авторы <span class="required"><b>*</b></span></label>
                     <select multiple class="form-control" asp-for="AuthorsId">
                         @foreach (var author in Model.Authors)
@@ -115,7 +115,6 @@
                     <label class="form-label">Выбрать Pdf-файл</label>
                     <input type="file" class="form-control" asp-for="PdfFile">
                 </div>
-
             </div>
             <div class="row mb-5 mt-5">
                 <div class="col-md-2 pl-lg-5 offset-7">

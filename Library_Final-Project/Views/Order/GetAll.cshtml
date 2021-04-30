@@ -1,0 +1,36 @@
+﻿@model List<Library_Final_Project.DTOs.Order.OrderViewModel>
+@{
+    Layout = "_AdminLayout";
+}
+
+<h2 class="text-center mt-4 mb-4">Список заказов</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-hover table-striped table-bordered">
+                    <thead>
+                        <tr>
+
+                            <th style="font-size: 18px;">Name</th>
+                            <th style="font-size: 18px;">Comment</th>
+                            <th style="font-size: 18px;">Address</th>
+                            <th style="font-size: 18px;">CreatedAt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var orders in Model)
+                        {
+                        <tr>
+                            <td style="font-size: 18px;">@User.Identity.Name</td>
+                            <td style="font-size: 18px;">@orders.Comment</td>
+                            <td style="font-size: 18px;">@orders.Address</td>
+                            <td style="font-size: 18px;">@orders.CreatedAt</td>
+                        </tr>
+                    }
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -18,6 +18,7 @@ namespace Library_Final_Project.Controllers
             _categoryService = categoryService;
             _fileService = fileService;
         }
+
         [HttpGet]
         [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> GetCategories()
@@ -25,6 +26,7 @@ namespace Library_Final_Project.Controllers
             var categories = await _categoryService.GetAll();
             return View(categories);
         }
+
         [HttpGet]
         [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> Create()
@@ -34,6 +36,7 @@ namespace Library_Final_Project.Controllers
                 Categories = await _categoryService.GetAllInDictionaryAsync()
             });
         }
+
         [HttpPost]
         public async Task<IActionResult> Create (CreateCategoryViewModel model)
         {

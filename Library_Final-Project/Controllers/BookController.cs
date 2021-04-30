@@ -9,6 +9,9 @@ using Library_Final_Project.Services.DeliveryType;
 using Library_Final_Project.Services.PaymentType;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Library_Final_Project.Controllers
@@ -45,11 +48,13 @@ namespace Library_Final_Project.Controllers
             _cartBookService = cartBookService;
             _userService = userService;
         }
+
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
             var books = await _bookService.GetPagedBookAsync(pageNumber, 10);
             return View(books);
         }
+
         [HttpGet]
         [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> GetBooks()
@@ -57,6 +62,7 @@ namespace Library_Final_Project.Controllers
             var books = await _bookService.GetAll();
             return View(books);
         }
+
         [HttpGet]
         [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> Create()
@@ -68,6 +74,7 @@ namespace Library_Final_Project.Controllers
             };
             return View(bookViewModel);
         }
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateBookViewModel model)
         {
@@ -95,6 +102,7 @@ namespace Library_Final_Project.Controllers
             book.Categories = await _categoryService.GetAllInDictionaryAsync();
             return View(book);
         }
+
         [HttpPost]
         public async Task<IActionResult> Update(UpdateBookViewModel model)
         {
@@ -119,6 +127,7 @@ namespace Library_Final_Project.Controllers
             await _bookService.UpdateAsync(model, imagePath, pdfPath);
             return RedirectToAction("GetBooks");
         }
+
         [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> Delete(int id)
         {
@@ -156,6 +165,19 @@ namespace Library_Final_Project.Controllers
             var currentUser = await _userService.GetUserAsync(User);
             var cartBooks = await _bookService.GetCartBooksAsync(currentUser.Id);
             return View(cartBooks);
+        }
+
+        public async Task<IActionResult> Search(string searchString)
+        {
+            var books = from m in _context.Books
+                select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                books = books.Where(s => s.Title.Contains(searchString));
+            }
+
+            return View(await books.ToListAsync());
         }
     }
 }

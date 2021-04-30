@@ -4,9 +4,7 @@
     ViewData["Title"] = "GetCategories";
     Layout = "_AdminLayout";
 }
-
 <h3 class="mt-4 mb-3">Список категории</h3>
-
 <table class="table bg-light table-striped">
     <thead>
         <tr>
@@ -17,16 +15,16 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
-            </td>
+        @foreach (var item in Model) {
+            <tr>
+              <td>
+                   @Html.DisplayFor(modelItem => item.Name)
+              </td>
+              <td>
+                  <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                  <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+               </td>
         </tr>
-}
+        }
     </tbody>
 </table>

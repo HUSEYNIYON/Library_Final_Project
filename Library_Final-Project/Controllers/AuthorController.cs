@@ -15,6 +15,7 @@ namespace Library_Final_Project.Controllers
         {
             _authorService = authorService;
         }
+
         [HttpGet]
         [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> GetAuthors()

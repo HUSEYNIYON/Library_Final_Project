@@ -17,6 +17,11 @@ namespace Library_Final_Project.Services
             _environment = environment;
         }
 
+        /// <summary>
+        /// AddFileAsync
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns>Image path</returns>
         public async Task<string> AddFileAsync(IFormFile file)
         {
             string filePath = _environment.WebRootPath + "/img/" + file.FileName;
@@ -27,6 +32,9 @@ namespace Library_Final_Project.Services
             return $"/img/{file.FileName}";
         }
 
+        /// <summary>
+        /// CreateDirectory
+        /// </summary>
         public void CreateDirectory()
         {
             string dirPath = _environment.WebRootPath + "/img";
@@ -36,6 +44,10 @@ namespace Library_Final_Project.Services
             }
         }
 
+        /// <summary>
+        /// DeleteFile
+        /// </summary>
+        /// <param name="filePath"></param>
         public void DeleteFile(string filePath)
         {
             filePath = _environment.WebRootPath + filePath;

@@ -1,6 +1,9 @@
 ﻿@model Library_Final_Project.Common.Pagination.PaginatedList<Library_Final_Project.DTOs.Book.BookViewModel>
 
+<h2 class="text-center mt-5">Список всех книг</h2>
+
 <div class="row">
+       
     @foreach (var book in Model)
     {
         <div class="col-md-2 m-3">
@@ -80,7 +83,6 @@
 <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-primary @nextDisabled">
     Next
 </a>
-
 <script>
     function addToCart(el) {
                 $.ajax({

@@ -1,5 +1,4 @@
-﻿using Library_Final_Project.Common.Enum;
-using Library_Final_Project.Entities;
+﻿using Library_Final_Project.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

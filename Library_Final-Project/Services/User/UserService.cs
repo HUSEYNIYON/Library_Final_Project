@@ -17,16 +17,32 @@ namespace Library_Final_Project.Services
             _userManager = userManager;
             _signInManager = signInManager;
         }
+
+        /// <summary>
+        /// GetUserAsync
+        /// </summary>
+        /// <param name="claimsPrincipal"></param>
+        /// <returns>Get logined user info</returns>
         public async Task<ApplicationUser> GetUserAsync(ClaimsPrincipal claimsPrincipal)
         {
             return await _userManager.GetUserAsync(claimsPrincipal);
         }
 
+        /// <summary>
+        /// SignInAsync
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
         public async Task<SignInResult> SignInAsync(SignInViewModel viewModel)
         {
             return await _signInManager.PasswordSignInAsync(viewModel.Login, viewModel.Password, false, false);
         }
 
+        /// <summary>
+        /// SignUpAsync
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task<IdentityResult> SignUpAsync(SignUpViewModel model)
         {
             var user = new ApplicationUser
@@ -43,6 +59,11 @@ namespace Library_Final_Project.Services
             }
             return response;
         }
+
+        /// <summary>
+        /// SignOutAsync
+        /// </summary>
+        /// <returns></returns>
         public async Task SignOutAsync()
         {
             await _signInManager.SignOutAsync();

@@ -63,7 +63,7 @@
                 </div>
                 <div class="row mt-4">
                     
-                    <div class="col-md-3 ">
+                    <div class="col-md-3 offset-1 mb-5">
                         <label class="form-label">Авторы <span class="required"><b>*</b></span></label>
                         <select multiple class="form-control" asp-for="AuthorsId">
                             @foreach (var author in Model.Authors)
@@ -72,7 +72,7 @@
                             }
                         </select>
                     </div>
-                    <div class="col-md-2 pl-lg-5 offset-1 mt-lg-5">
+                    <div class="col-md-2 pl-lg-5 offset-3 mt-lg-5">
                         <div class="input-group mb-3">
                             <a asp-action="GetBooks" asp-controller="Book" class="btn btn-block btn-danger">Отмена</a>
                         </div>

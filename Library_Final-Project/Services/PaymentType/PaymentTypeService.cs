@@ -14,6 +14,11 @@ namespace Library_Final_Project.Services.PaymentType
         {
             _context = context;
         }
+
+        /// <summary>
+        /// GetAllInDictionaryAsync
+        /// </summary>
+        /// <returns></returns>
         public async Task<Dictionary<int,string>> GetAllInDictionaryAsync()
         {
             return await _context.PaymentTypes.ToDictionaryAsync(x => x.Id, x => x.Name);

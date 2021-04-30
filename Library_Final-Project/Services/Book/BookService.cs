@@ -3,7 +3,6 @@ using Library_Final_Project.Common.Pagination;
 using Library_Final_Project.DTOs.Book;
 using Library_Final_Project.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +18,11 @@ namespace Library_Final_Project.Services.Book
         {
             _context = context;
         }
+
+        /// <summary>
+        /// GetAll
+        /// </summary>
+        /// <returns>List of Books</returns>
         public async Task<List<BookViewModel>> GetAll()
         {
             return await _context.Books.Select(x => new BookViewModel
@@ -31,6 +35,14 @@ namespace Library_Final_Project.Services.Book
                 Price = x.Price
             }).ToListAsync();
         }
+
+        /// <summary>
+        /// CreateAsync
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="imagePath"></param>
+        /// <param name="pdfPath"></param>
+        /// <returns></returns>
         public async Task CreateAsync(CreateBookViewModel model, string imagePath, string pdfPath)
         {
             var book = new Entities.Book
@@ -61,6 +73,12 @@ namespace Library_Final_Project.Services.Book
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// GetPagedBookAsync
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns>Return List of paged books</returns>
         public async Task<PaginatedList<BookViewModel>> GetPagedBookAsync(int pageIndex, int pageSize)
         {
             var booksCount = await _context.Books.CountAsync();
@@ -77,6 +95,11 @@ namespace Library_Final_Project.Services.Book
             return new PaginatedList<BookViewModel>(items, booksCount, pageIndex, pageSize);
         }
 
+        /// <summary>
+        /// GetByIdAsync
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Get by id using lazy loading</returns>
         public async Task<UpdateBookViewModel> GetByIdAsync (int id)
         {
             return await _context.Books.Where(x => x.Id == id).Include(x => x.BookAuthors).ThenInclude(x => x.Author).Include(x => x.Category).Select(x => new UpdateBookViewModel
@@ -98,6 +121,14 @@ namespace Library_Final_Project.Services.Book
                 PrevPdfPath = x.PdfPath
             }).FirstOrDefaultAsync();
         }
+
+        /// <summary>
+        /// UpdateAsync
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="imagePath"></param>
+        /// <param name="pdfPath"></param>
+        /// <returns></returns>
         public async Task UpdateAsync(UpdateBookViewModel model, string imagePath, string pdfPath)
         {
             var book = await _context.Books.FindAsync(model.Id);
@@ -139,6 +170,11 @@ namespace Library_Final_Project.Services.Book
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Delete
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task Delete(int id)
         {
             var book = await _context.Books.FindAsync(id);
@@ -152,6 +188,12 @@ namespace Library_Final_Project.Services.Book
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// AddToCartAsync
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public async Task<Response> AddToCartAsync(int bookId, string userId)
         {
             var cartBook = await _context.CartBooks.FirstOrDefaultAsync(x => x.BookId == bookId && x.UserId == userId);
@@ -170,8 +212,15 @@ namespace Library_Final_Project.Services.Book
                 await _context.CartBooks.AddAsync(cartBook);
             }
             var result = await _context.SaveChangesAsync();
-            return new Response { Succeeded = result > 0, Message = result > 0 ? null : "Ошибка при добавлении" };
+            return new Response { Succeeded = result > 0, Message = result > 0 ? null : "Ошибка при добавлении" }; //tich
         }
+
+        /// <summary>
+        /// DeleteFromCartAsync
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public async Task<Response> DeleteFromCartAsync(int bookId, string userId)
         {
             var cartBook = await _context.CartBooks.FirstOrDefaultAsync(x => x.BookId == bookId && x.UserId == userId);
@@ -184,8 +233,14 @@ namespace Library_Final_Project.Services.Book
                 _context.CartBooks.Remove(cartBook);
             }
             var result = await _context.SaveChangesAsync();
-            return new Response { Succeeded = result > 0, Message = result > 0 ? null : "Ошибка при добавлении" };
+            return new Response { Succeeded = result > 0, Message = result > 0 ? null : "Ошибка при добавлении" }; //tich
         }
+
+        /// <summary>
+        /// GetCartBooksAsync
+        /// </summary>
+        /// <param name="currentUserId"></param>
+        /// <returns>List of cartBooks</returns>
         public async Task<List<CartBookViewModel>> GetCartBooksAsync(string currentUserId)
         {
             return await _context.CartBooks.Include(x => x.Book).Select(x => new CartBookViewModel
@@ -197,6 +252,13 @@ namespace Library_Final_Project.Services.Book
                 ImagePath = x.Book.ImagePath
             }).ToListAsync();
         }
+
+        /// <summary>
+        /// DeleteAllFromCartAsync
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <param name="currentUserId"></param>
+        /// <returns></returns>
         public async Task<Response> DeleteAllFromCartAsync(int bookId, string currentUserId)
         {
             var cartBook = await _context.CartBooks.FirstOrDefaultAsync(x => x.BookId == bookId && x.UserId == currentUserId);
@@ -204,6 +266,5 @@ namespace Library_Final_Project.Services.Book
             var result = await _context.SaveChangesAsync();
             return new Response { Succeeded = result > 0, Message = result > 0 ? null : "Ошибка при удалении" };
         }
-
     }
 }

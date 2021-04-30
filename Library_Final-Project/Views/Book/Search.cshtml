@@ -1,0 +1,78 @@
+﻿@model List<Library_Final_Project.Entities.Book>
+@{
+    ViewData["title"] = "Поиск по блюдам";
+}
+
+
+<div class="row">
+    <div class="row">
+        @foreach (var book in Model)
+        {
+            <div class="col-md-2 m-3">
+                <div class="card mt-3" style="width: 250px;">
+                    <div class="image position-relative px-2 px-md-3 pt-2 pb-2">
+                        <a href="#">
+                            <img src="@book.ImagePath" alt="image" width="300" height="300" class="img-fluid mx-auto d-block">
+                        </a>
+                    </div>
+                    <div class="card-body px-2 px-md-3 pt-2 pb-0">
+                        <div class="caption">
+                            <h6 class="card-title mb-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="#65bc54" width="12" height="12" viewBox="0 0 24 24" class="inline-svg">
+                                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.25 17.292l-4.5-4.364 1.857-1.858 2.643 2.506 5.643-5.784 1.857 1.857-7.5 7.643z"></path>
+                                </svg>
+                                <a href="#">@book.Title</a>
+                            </h6>
+                            <small class="card-author text-muted mb-1 d-block">Джон Кехо</small>
+                        </div>
+                    </div>
+                    <div class="card-footer px-2 px-md-3 pb-2 pb-md-3 pt-0 bg-white border-0">
+                        <div class="price">
+                            <div class="h6 mb-1">@book.Price сомони</div>
+                        </div>
+                        <div class="rating mt-2">
+                            <div class="d-inline-block mr-1">
+                                <span class="si si-rem si-rem-star">
+                                    <svg fill="#ddd" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                                    </svg>
+                                </span>
+                                <span class="si si-rem si-rem-star">
+                                    <svg fill="#ddd" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                                    </svg>
+                                </span>
+                                <span class="si si-rem si-rem-star">
+                                    <svg fill="#ddd" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                                    </svg>
+                                </span>
+                                <span class="si si-rem si-rem-star">
+                                    <svg fill="#ddd" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                                    </svg>
+                                </span>
+                                <span class="si si-rem si-rem-star">
+                                    <svg fill="#ddd" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                            <small class="d-inline-block">
+                                <span class="text-muted">Нет отзывов</span>
+                            </small>
+                        </div>
+                        <a href="~/Book/AddToCart?bookId=@book.Id" class="btn btn-light btn-cart-add btn-add px-1">
+                            <span class="si si-rem">
+                                <svg fill="#bbb" width="20" height="20" viewBox="0 0 20 30" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"></path>
+                                </svg>
+                            </span>
+                            <span class="text">Купить</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    </div>
