@@ -139,7 +139,7 @@ namespace Library_Final_Project.Controllers
         public async Task<IActionResult> AddToCart(int bookId)
         {
             var currentUser = await _userService.GetUserAsync(User);
-            var result = await _bookService.AddToCartAsync(bookId, currentUser.Id);
+            await _bookService.AddToCartAsync(bookId, currentUser.Id);
             return RedirectToAction("CartBooks");
         }
 
@@ -147,7 +147,7 @@ namespace Library_Final_Project.Controllers
         public async Task<IActionResult> DeleteFromCart(int bookId)
         {
             var currentUser = await _userService.GetUserAsync(User);
-            var result = await _bookService.DeleteFromCartAsync(bookId, currentUser.Id);
+            await _bookService.DeleteFromCartAsync(bookId, currentUser.Id);
             return RedirectToAction("CartBooks");
         }
 
@@ -155,7 +155,7 @@ namespace Library_Final_Project.Controllers
         public async Task<IActionResult> DeleteAllFromCart(int bookId)
         {
             var currentUser = await _userService.GetUserAsync(User);
-            var result = await _bookService.DeleteAllFromCartAsync(bookId, currentUser.Id);
+            await _bookService.DeleteAllFromCartAsync(bookId, currentUser.Id);
             return RedirectToAction("CartBooks");
         }
 

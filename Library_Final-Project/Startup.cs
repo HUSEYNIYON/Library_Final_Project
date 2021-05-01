@@ -40,6 +40,7 @@ namespace Library_Final_Project
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Account/SignIn";
+                options.AccessDeniedPath = "/Home/Index";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 options.SlidingExpiration = true;
             });

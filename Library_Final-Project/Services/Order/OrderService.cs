@@ -20,19 +20,48 @@ namespace Library_Final_Project.Services
         }
 
         /// <summary>
+        /// ApproveAsync
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task ApproveAsync(int id)
+        {
+            var order = await _context.Orders.FindAsync(id);
+            order.OrderStateId = 2;
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// RejectAsync
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task RejectAsync(int id)
+        {
+            var order = await _context.Orders.FindAsync(id);
+            order.OrderStateId = 3;
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
         /// GetAll
         /// </summary>
         /// <returns>List of all orders</returns>
-        public async Task<List<OrderViewModel>> GetAll()
+        public async Task<GetOrdersViewModel> GetAll()
         {
-            var getAllOrders = await _context.Orders.Select(x => new OrderViewModel
+            return new GetOrdersViewModel
             {
-                Comment = x.Comment,
-                Address = x.Address,
-                CreatedAt = x.CreateAt,
-                UserId = x.UserId
-            }).ToListAsync();
-            return getAllOrders;
+                Orders = await _context.Orders.Select(x => new OrderViewModel
+                {
+                    Id = x.Id,
+                    Comment = x.Comment,
+                    Address = x.Address,
+                    CreatedAt = x.CreateAt,
+                    UserId = x.UserId,
+                    StateId = x.OrderStateId
+                }).ToListAsync(),
+                OrderStates = await _context.OrderStates.ToDictionaryAsync(x => x.Id, x => x.Name)
+            };
         }
 
         /// <summary>

@@ -22,10 +22,25 @@ namespace Library_Final_Project.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = nameof(Roles.Admin))]
         public async Task<IActionResult> GetAll()
         {
             var orders = await _orderService.GetAll();
             return View(orders);
+        }
+
+        [Authorize(Roles = nameof(Roles.Admin))]
+        public async Task<IActionResult> Approve(int id)
+        {
+            await _orderService.ApproveAsync(id);
+            return RedirectToAction("GetAll");
+        }
+
+        [Authorize(Roles = nameof(Roles.Admin))]
+        public async Task<IActionResult> Reject(int id)
+        {
+            await _orderService.RejectAsync(id);
+            return RedirectToAction("GetAll");
         }
 
         [HttpGet]
@@ -33,9 +48,7 @@ namespace Library_Final_Project.Controllers
         public async Task<IActionResult> Create()
         {
             var currentUser = await _userService.GetUserAsync(User);
-
             var order = await _orderService.GetOrderBooksAsync(currentUser.Id);
-
             return View(order);
         }
 
@@ -44,9 +57,7 @@ namespace Library_Final_Project.Controllers
         public async Task<IActionResult> Create(CreateOrderViewModel model)
         {
             var currentUser = await _userService.GetUserAsync(User);
-
             await _orderService.CreateAsync(model, currentUser.Id);
-
             return RedirectToAction("Index","Home");
         }
     }

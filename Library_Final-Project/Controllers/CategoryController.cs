@@ -20,7 +20,7 @@ namespace Library_Final_Project.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = nameof(Roles.Admin))]
+        [Authorize(Roles = nameof(Roles.Admin)+ " " + nameof(Roles.User))]
         public async Task<IActionResult> GetCategories()
         {
             var categories = await _categoryService.GetAll();

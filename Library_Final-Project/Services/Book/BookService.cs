@@ -194,7 +194,7 @@ namespace Library_Final_Project.Services.Book
         /// <param name="bookId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<Response> AddToCartAsync(int bookId, string userId)
+        public async Task AddToCartAsync(int bookId, string userId)
         {
             var cartBook = await _context.CartBooks.FirstOrDefaultAsync(x => x.BookId == bookId && x.UserId == userId);
             if(cartBook != null)
@@ -212,7 +212,6 @@ namespace Library_Final_Project.Services.Book
                 await _context.CartBooks.AddAsync(cartBook);
             }
             var result = await _context.SaveChangesAsync();
-            return new Response { Succeeded = result > 0, Message = result > 0 ? null : "Ошибка при добавлении" }; //tich
         }
 
         /// <summary>
@@ -221,7 +220,7 @@ namespace Library_Final_Project.Services.Book
         /// <param name="bookId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<Response> DeleteFromCartAsync(int bookId, string userId)
+        public async Task DeleteFromCartAsync(int bookId, string userId)
         {
             var cartBook = await _context.CartBooks.FirstOrDefaultAsync(x => x.BookId == bookId && x.UserId == userId);
             if(cartBook.Count > 1)
@@ -233,7 +232,6 @@ namespace Library_Final_Project.Services.Book
                 _context.CartBooks.Remove(cartBook);
             }
             var result = await _context.SaveChangesAsync();
-            return new Response { Succeeded = result > 0, Message = result > 0 ? null : "Ошибка при добавлении" }; //tich
         }
 
         /// <summary>
@@ -259,12 +257,11 @@ namespace Library_Final_Project.Services.Book
         /// <param name="bookId"></param>
         /// <param name="currentUserId"></param>
         /// <returns></returns>
-        public async Task<Response> DeleteAllFromCartAsync(int bookId, string currentUserId)
+        public async Task DeleteAllFromCartAsync(int bookId, string currentUserId)
         {
             var cartBook = await _context.CartBooks.FirstOrDefaultAsync(x => x.BookId == bookId && x.UserId == currentUserId);
             _context.CartBooks.Remove(cartBook);
             var result = await _context.SaveChangesAsync();
-            return new Response { Succeeded = result > 0, Message = result > 0 ? null : "Ошибка при удалении" };
         }
     }
 }
